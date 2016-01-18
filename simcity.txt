@@ -1,0 +1,208 @@
+//Factories
+CREATE
+	(Metal:Ingredient {name:'Metal', time:1}),
+	(Wood:Ingredient {name:'Wood', time:3}),
+	(Plastic:Ingredient {name:'Plastic', time:9}),
+	(Seeds:Ingredient {name:'Seeds', time:20}),
+	(Minerals:Ingredient {name:'Minerals', time:30}),
+	(Chemicals:Ingredient {name:'Chemicals', time:120}),
+	(Textiles:Ingredient {name:'Textiles', time:180}),
+	(SugarAndSpices:Ingredient {name:'Sugar and Spices', time:240}),
+	(Glass:Ingredient {name:'Glass', time:300}),
+	(AnimalFeed:Ingredient {name:'Animal Feed', time:360}),
+	(ElectricalComponents:Ingredient {name:'Electrical Components', time:420})
+
+//Building Supplies Store
+CREATE
+	(Nails:Ingredient {name:'Nails', time:5}),
+	(Planks:Ingredient {name:'Planks', time:30}),
+	(Bricks:Ingredient {name:'Bricks', time:20}),
+	(Cement:Ingredient {name:'Cement', time:50}),
+	(Glue:Ingredient {name:'Glue', time:60})
+
+//Hardware Store
+CREATE
+	(Hammer:Ingredient {name:'Hammer', time:14}),
+	(MeasuringTape:Ingredient {name:'Measuring Tape', time:20}),
+	(Shovel:Ingredient {name:'Shovel', time:30}),
+	(CookingUtensils:Ingredient {name:'Cooking Utensils', time:45}),
+	(Drill:Ingredient {name:'Drill', time:120})
+
+//Furnitures Store
+CREATE
+	(Chairs:Ingredient {name:'Chairs', time:20}),
+	(Tables:Ingredient {name:'Tables', time:30}),
+	(HomeTextiles:Ingredient {name:'Home Textiles', time:75}),
+	(Couch:Ingredient {name:'Couch', time:150})
+
+//Farmer's Market
+CREATE
+	(Vegetables:Ingredient {name:'Vegetables', time:20}),
+	(FlourBag:Ingredient {name:'Flour Bag', time:30}),
+	(FruitAndBerries:Ingredient {name:'Fruit and Berries', time:90}),
+	(Cream:Ingredient {name:'Cream', time:75}),
+	(Cheese:Ingredient {name:'Cheese', time:105}),
+	(Beef:Ingredient {name:'Beef', time:150})
+
+//Gardening Supplies
+CREATE
+	(Grass:Ingredient {name:'Grass', time:30}),
+	(TreeSaplings:Ingredient {name:'Tree Saplings', time:90}),
+	(GardenFurniture:Ingredient {name:'Garden Furniture', time:135}),
+	(FirePit:Ingredient {name:'Fire Pit', time:240}),
+	(GardenGnomes:Ingredient {name:'Garden Gnomes', time:90})
+
+//Donut Shop
+CREATE
+	(Donuts:Ingredient {name:'Donuts', time:45}),
+	(GreenSmoothie:Ingredient {name:'Green Smoothie', time:30}),
+	(BreadRoll:Ingredient {name:'Bread Roll', time:60}),
+	(CherryCheesecake:Ingredient {name:'Cherry Cheesecake', time:90}),
+	(FrozenYogurt:Ingredient {name:'Frozen Yogurt', time:240})
+
+//Fast Food Restaurant
+CREATE
+	(IceCreamSandwich:Ingredient {name:'Ice Cream Sandwich', time:14}),
+	(Pizza:Ingredient {name:'Pizza', time:24}),
+	(Burgers:Ingredient {name:'Burgers', time:35}),
+	(CheeseFries:Ingredient {name:'Cheese Fries', time:20}),
+	(LemonadeBottle:Ingredient {name:'Lemonade Bottle', time:60})
+
+//Fashion Store
+CREATE
+	(Cap:Ingredient {name:'Cap', time:60}),
+	(Shoes:Ingredient {name:'Shoes', time:75}),
+	(Watch:Ingredient {name:'Watch', time:90}),
+	(BusinessSuits:Ingredient {name:'Business Suits', time:210})
+
+//Home Appliances
+CREATE
+	(BBQGrill:Ingredient {name:'BBQ Grill', time:165}),
+	(Refrigerator:Ingredient {name:'Refrigerator', time:210}),
+	(LightingSystem:Ingredient {name:'Lighting System', time:105}),
+	(TV:Ingredient {name:'TV', time:150})
+
+//Building Supplies Store
+CREATE
+	(Nails)-[:NEED {quantity:2}]->(Metal),
+	(Planks)-[:NEED {quantity:2}]->(Wood),
+	(Bricks)-[:NEED {quantity:2}]->(Minerals),
+	(Cement)-[:NEED {quantity:2}]->(Minerals),
+	(Cement)-[:NEED {quantity:1}]->(Chemicals),
+	(Glue)-[:NEED {quantity:1}]->(Plastic),
+	(Glue)-[:NEED {quantity:2}]->(Chemicals)
+
+//Hardware Store
+CREATE
+	(Hammer)-[:NEED {quantity:1}]->(Metal),
+	(Hammer)-[:NEED {quantity:1}]->(Wood),
+	(MeasuringTape)-[:NEED {quantity:1}]->(Metal),
+	(MeasuringTape)-[:NEED {quantity:1}]->(Plastic),
+	(Shovel)-[:NEED {quantity:1}]->(Metal),
+	(Shovel)-[:NEED {quantity:1}]->(Wood),
+	(Shovel)-[:NEED {quantity:1}]->(Plastic),
+	(CookingUtensils)-[:NEED {quantity:2}]->(Metal),
+	(CookingUtensils)-[:NEED {quantity:2}]->(Wood),
+	(CookingUtensils)-[:NEED {quantity:2}]->(Plastic),
+	(Drill)-[:NEED {quantity:2}]->(Metal),
+	(Drill)-[:NEED {quantity:2}]->(Plastic),
+	(Drill)-[:NEED {quantity:1}]->(ElectricalComponents)
+
+//Furniture Store
+CREATE
+	(Chairs)-[:NEED {quantity:2}]->(Wood),
+	(Chairs)-[:NEED {quantity:1}]->(Nails),
+	(Chairs)-[:NEED {quantity:1}]->(Hammer),
+	(Tables)-[:NEED {quantity:1}]->(Planks),
+	(Tables)-[:NEED {quantity:2}]->(Nails),
+	(Tables)-[:NEED {quantity:1}]->(Hammer),
+	(HomeTextiles)-[:NEED {quantity:1}]->(Textiles),
+	(HomeTextiles)-[:NEED {quantity:1}]->(MeasuringTape),
+	(Couch)-[:NEED {quantity:3}]->(Textiles),
+	(Couch)-[:NEED {quantity:1}]->(Drill),
+	(Couch)-[:NEED {quantity:1}]->(Glue)
+
+//Farmer's Market
+CREATE
+	(Vegetables)-[:NEED {quantity:2}]->(Seeds),
+	(FlourBag)-[:NEED {quantity:2}]->(Seeds),
+	(FlourBag)-[:NEED {quantity:2}]->(Textiles),
+	(FruitAndBerries)-[:NEED {quantity:2}]->(Seeds),
+	(FruitAndBerries)-[:NEED {quantity:1}]->(TreeSaplings),
+	(Cream)-[:NEED {quantity:1}]->(AnimalFeed),
+	(Cheese)-[:NEED {quantity:2}]->(AnimalFeed),
+	(Beef)-[:NEED {quantity:3}]->(AnimalFeed)
+
+//Gardening Supplies
+CREATE
+	(Grass)-[:NEED {quantity:1}]->(Seeds),
+	(Grass)-[:NEED {quantity:1}]->(Shovel),
+	(TreeSaplings)-[:NEED {quantity:2}]->(Seeds),
+	(TreeSaplings)-[:NEED {quantity:1}]->(Shovel),
+	(GardenFurniture)-[:NEED {quantity:2}]->(Planks),
+	(GardenFurniture)-[:NEED {quantity:2}]->(Plastic),
+	(GardenFurniture)-[:NEED {quantity:2}]->(Textiles),
+	(FirePit)-[:NEED {quantity:2}]->(Bricks),
+	(FirePit)-[:NEED {quantity:1}]->(Shovel),
+	(FirePit)-[:NEED {quantity:2}]->(Cement),
+	(GardenGnomes)-[:NEED {quantity:2}]->(Cement),
+	(GardenGnomes)-[:NEED {quantity:1}]->(Glue)
+
+//Donut Shop
+CREATE
+	(Donuts)-[:NEED {quantity:1}]->(FlourBag),
+	(Donuts)-[:NEED {quantity:1}]->(SugarAndSpices),
+	(GreenSmoothie)-[:NEED {quantity:1}]->(Vegetables),
+	(GreenSmoothie)-[:NEED {quantity:1}]->(FruitAndBerries),
+	(BreadRoll)-[:NEED {quantity:2}]->(FlourBag),
+	(BreadRoll)-[:NEED {quantity:1}]->(Cream),
+	(CherryCheesecake)-[:NEED {quantity:1}]->(FlourBag),
+	(CherryCheesecake)-[:NEED {quantity:1}]->(FruitAndBerries),
+	(CherryCheesecake)-[:NEED {quantity:1}]->(Cheese),
+	(FrozenYogurt)-[:NEED {quantity:1}]->(FruitAndBerries),
+	(FrozenYogurt)-[:NEED {quantity:1}]->(Cream),
+	(FrozenYogurt)-[:NEED {quantity:1}]->(SugarAndSpices)
+
+//Fast Food Restaurant
+CREATE
+	(IceCreamSandwich)-[:NEED {quantity:1}]->(BreadRoll),
+	(IceCreamSandwich)-[:NEED {quantity:1}]->(Cream),
+	(Pizza)-[:NEED {quantity:1}]->(FlourBag),
+	(Pizza)-[:NEED {quantity:1}]->(Cheese),
+	(Pizza)-[:NEED {quantity:1}]->(Beef),
+	(Burgers)-[:NEED {quantity:1}]->(Beef),
+	(Burgers)-[:NEED {quantity:1}]->(BreadRoll),
+	(Burgers)-[:NEED {quantity:1}]->(BBQGrill),
+	(CheeseFries)-[:NEED {quantity:1}]->(Vegetable),
+	(CheeseFries)-[:NEED {quantity:1}]->(Cheese),
+	(LemonadeBottle)-[:NEED {quantity:2}]->(Glass),
+	(LemonadeBottle)-[:NEED {quantity:2}]->(SugarAndSpices),
+	(LemonadeBottle)-[:NEED {quantity:1}]->(FruitAndBerries)
+
+//Fashion Store
+CREATE
+	(Cap)-[:NEED {quantity:2}]->(Textiles),
+	(Cap)-[:NEED {quantity:1}]->(MeasuringTape),
+	(Shoes)-[:NEED {quantity:2}]->(Textiles),
+	(Shoes)-[:NEED {quantity:1}]->(Plastic),
+	(Shoes)-[:NEED {quantity:1}]->(Glue),
+	(Watch)-[:NEED {quantity:2}]->(Plastic),
+	(Watch)-[:NEED {quantity:1}]->(Glass),
+	(Watch)-[:NEED {quantity:1}]->(Chemicals),
+	(BusinessSuits)-[:NEED {quantity:3}]->(Textiles),
+	(BusinessSuits)-[:NEED {quantity:1}]->(MeasuringTape),
+	(BusinessSuits)-[:NEED {quantity:1}]->(Glue)
+
+//Home Appliances
+CREATE
+	(BBQGrill)-[:NEED {quantity:3}]->(Metal),
+	(BBQGrill)-[:NEED {quantity:1}]->(CookingUtensils),
+	(Refrigerator)-[:NEED {quantity:2}]->(Plastic),
+	(Refrigerator)-[:NEED {quantity:2}]->(Chemicals),
+	(Refrigerator)-[:NEED {quantity:2}]->(ElectricalComponents),
+	(LightingSystem)-[:NEED {quantity:1}]->(Chemicals),
+	(LightingSystem)-[:NEED {quantity:1}]->(ElectricalComponents),
+	(LightingSystem)-[:NEED {quantity:1}]->(Glass),
+	(TV)-[:NEED {quantity:2}]->(Plastic),
+	(TV)-[:NEED {quantity:2}]->(Glass),
+	(TV)-[:NEED {quantity:1}]->(ElectricalComponents)
