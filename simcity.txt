@@ -18,7 +18,8 @@ CREATE
 	(Planks:Ingredient {name:'Planks', time:30}),
 	(Bricks:Ingredient {name:'Bricks', time:20}),
 	(Cement:Ingredient {name:'Cement', time:50}),
-	(Glue:Ingredient {name:'Glue', time:60})
+	(Glue:Ingredient {name:'Glue', time:60}),
+	(Paint:Ingredient {name:'Paint', time:60})
 
 //Hardware Store
 CREATE
@@ -26,6 +27,7 @@ CREATE
 	(MeasuringTape:Ingredient {name:'Measuring Tape', time:20}),
 	(Shovel:Ingredient {name:'Shovel', time:30}),
 	(CookingUtensils:Ingredient {name:'Cooking Utensils', time:45}),
+	(Ladder:Ingredient {name:'Ladder', time:60}),
 	(Drill:Ingredient {name:'Drill', time:120})
 
 //Furnitures Store
@@ -33,6 +35,7 @@ CREATE
 	(Chairs:Ingredient {name:'Chairs', time:20}),
 	(Tables:Ingredient {name:'Tables', time:30}),
 	(HomeTextiles:Ingredient {name:'Home Textiles', time:75}),
+	(Cupboard:Ingredient {name:'Cupboard', time:45}),
 	(Couch:Ingredient {name:'Couch', time:150})
 
 //Farmer's Market
@@ -41,6 +44,7 @@ CREATE
 	(FlourBag:Ingredient {name:'Flour Bag', time:30}),
 	(FruitAndBerries:Ingredient {name:'Fruit and Berries', time:90}),
 	(Cream:Ingredient {name:'Cream', time:75}),
+	(Corn:Ingredient {name:'Corn', time:60}),
 	(Cheese:Ingredient {name:'Cheese', time:105}),
 	(Beef:Ingredient {name:'Beef', time:150})
 
@@ -50,6 +54,7 @@ CREATE
 	(TreeSaplings:Ingredient {name:'Tree Saplings', time:90}),
 	(GardenFurniture:Ingredient {name:'Garden Furniture', time:135}),
 	(FirePit:Ingredient {name:'Fire Pit', time:240}),
+	(LawnMower:Ingredient {name:'Lawn Mower', time:120}),
 	(GardenGnomes:Ingredient {name:'Garden Gnomes', time:90})
 
 //Donut Shop
@@ -58,7 +63,8 @@ CREATE
 	(GreenSmoothie:Ingredient {name:'Green Smoothie', time:30}),
 	(BreadRoll:Ingredient {name:'Bread Roll', time:60}),
 	(CherryCheesecake:Ingredient {name:'Cherry Cheesecake', time:90}),
-	(FrozenYogurt:Ingredient {name:'Frozen Yogurt', time:240})
+	(FrozenYogurt:Ingredient {name:'Frozen Yogurt', time:240}),
+	(Coffee:Ingredient {name:'Coffee', time:60})
 
 //Fast Food Restaurant
 CREATE
@@ -66,21 +72,24 @@ CREATE
 	(Pizza:Ingredient {name:'Pizza', time:24}),
 	(Burgers:Ingredient {name:'Burgers', time:35}),
 	(CheeseFries:Ingredient {name:'Cheese Fries', time:20}),
-	(LemonadeBottle:Ingredient {name:'Lemonade Bottle', time:60})
+	(LemonadeBottle:Ingredient {name:'Lemonade Bottle', time:60}),
+	(Popcorn:Ingredient {name:'Popcorn', time:30})
 
 //Fashion Store
 CREATE
 	(Cap:Ingredient {name:'Cap', time:60}),
 	(Shoes:Ingredient {name:'Shoes', time:75}),
 	(Watch:Ingredient {name:'Watch', time:90}),
-	(BusinessSuits:Ingredient {name:'Business Suits', time:210})
+	(BusinessSuits:Ingredient {name:'Business Suits', time:210}),
+	(Backpack:Ingredient {name:'Backpack', time:150})
 
 //Home Appliances
 CREATE
 	(BBQGrill:Ingredient {name:'BBQ Grill', time:165}),
 	(Refrigerator:Ingredient {name:'Refrigerator', time:210}),
 	(LightingSystem:Ingredient {name:'Lighting System', time:105}),
-	(TV:Ingredient {name:'TV', time:150})
+	(TV:Ingredient {name:'TV', time:150}),
+	(MicrowaveOven:Ingredient {name:'Microwave Oven', time:120})
 
 //Building Supplies Store
 CREATE
@@ -90,7 +99,10 @@ CREATE
 	(Cement)-[:NEED {quantity:2}]->(Minerals),
 	(Cement)-[:NEED {quantity:1}]->(Chemicals),
 	(Glue)-[:NEED {quantity:1}]->(Plastic),
-	(Glue)-[:NEED {quantity:2}]->(Chemicals)
+	(Glue)-[:NEED {quantity:2}]->(Chemicals),
+	(Paint)-[:NEED {quantity:2}]->(Metal),
+	(Paint)-[:NEED {quantity:1}]->(Minerals),
+	(Paint)-[:NEED {quantity:2}]->(Chemicals)
 
 //Hardware Store
 CREATE
@@ -104,6 +116,8 @@ CREATE
 	(CookingUtensils)-[:NEED {quantity:2}]->(Metal),
 	(CookingUtensils)-[:NEED {quantity:2}]->(Wood),
 	(CookingUtensils)-[:NEED {quantity:2}]->(Plastic),
+	(Ladder)-[:NEED {quantity:2}]->(Planks),
+	(Ladder)-[:NEED {quantity:2}]->(Metal),
 	(Drill)-[:NEED {quantity:2}]->(Metal),
 	(Drill)-[:NEED {quantity:2}]->(Plastic),
 	(Drill)-[:NEED {quantity:1}]->(ElectricalComponents)
@@ -118,6 +132,9 @@ CREATE
 	(Tables)-[:NEED {quantity:1}]->(Hammer),
 	(HomeTextiles)-[:NEED {quantity:1}]->(Textiles),
 	(HomeTextiles)-[:NEED {quantity:1}]->(MeasuringTape),
+	(Cupboard)-[:NEED {quantity:2}]->(Planks),
+	(Cupboard)-[:NEED {quantity:2}]->(Glass),
+	(Cupboard)-[:NEED {quantity:1}]->(Paint),
 	(Couch)-[:NEED {quantity:3}]->(Textiles),
 	(Couch)-[:NEED {quantity:1}]->(Drill),
 	(Couch)-[:NEED {quantity:1}]->(Glue)
@@ -130,6 +147,8 @@ CREATE
 	(FruitAndBerries)-[:NEED {quantity:2}]->(Seeds),
 	(FruitAndBerries)-[:NEED {quantity:1}]->(TreeSaplings),
 	(Cream)-[:NEED {quantity:1}]->(AnimalFeed),
+	(Corn)-[:NEED {quantity:1}]->(Minerals),
+	(Corn)-[:NEED {quantity:4}]->(Seeds),
 	(Cheese)-[:NEED {quantity:2}]->(AnimalFeed),
 	(Beef)-[:NEED {quantity:3}]->(AnimalFeed)
 
@@ -145,6 +164,9 @@ CREATE
 	(FirePit)-[:NEED {quantity:2}]->(Bricks),
 	(FirePit)-[:NEED {quantity:1}]->(Shovel),
 	(FirePit)-[:NEED {quantity:2}]->(Cement),
+	(LawnMower)-[:NEED {quantity:3}]->(Metals),
+	(LawnMower)-[:NEED {quantity:1}]->(Paint),
+	(LawnMower)-[:NEED {quantity:1}]->(ElectricalComponents),
 	(GardenGnomes)-[:NEED {quantity:2}]->(Cement),
 	(GardenGnomes)-[:NEED {quantity:1}]->(Glue)
 
@@ -161,7 +183,10 @@ CREATE
 	(CherryCheesecake)-[:NEED {quantity:1}]->(Cheese),
 	(FrozenYogurt)-[:NEED {quantity:1}]->(FruitAndBerries),
 	(FrozenYogurt)-[:NEED {quantity:1}]->(Cream),
-	(FrozenYogurt)-[:NEED {quantity:1}]->(SugarAndSpices)
+	(FrozenYogurt)-[:NEED {quantity:1}]->(SugarAndSpices),
+	(Coffee)-[:NEED {quantity:1}]->(Cream),
+	(Coffee)-[:NEED {quantity:2}]->(Seeds),
+	(Coffee)-[:NEED {quantity:1}]->(SugarAndSpices)
 
 //Fast Food Restaurant
 CREATE
@@ -177,7 +202,9 @@ CREATE
 	(CheeseFries)-[:NEED {quantity:1}]->(Cheese),
 	(LemonadeBottle)-[:NEED {quantity:2}]->(Glass),
 	(LemonadeBottle)-[:NEED {quantity:2}]->(SugarAndSpices),
-	(LemonadeBottle)-[:NEED {quantity:1}]->(FruitAndBerries)
+	(LemonadeBottle)-[:NEED {quantity:1}]->(FruitAndBerries),
+	(Popcorn)-[:NEED {quantity:1}]->(MicrowaveOven),
+	(Popcorn)-[:NEED {quantity:2}]->(Corn)
 
 //Fashion Store
 CREATE
@@ -191,7 +218,10 @@ CREATE
 	(Watch)-[:NEED {quantity:1}]->(Chemicals),
 	(BusinessSuits)-[:NEED {quantity:3}]->(Textiles),
 	(BusinessSuits)-[:NEED {quantity:1}]->(MeasuringTape),
-	(BusinessSuits)-[:NEED {quantity:1}]->(Glue)
+	(BusinessSuits)-[:NEED {quantity:1}]->(Glue),
+	(Backpack)-[:NEED {quantity:2}]->(Textiles),
+	(Backpack)-[:NEED {quantity:2}]->(Plastic),
+	(Backpack)-[:NEED {quantity:1}]->(MeasuringTape)
 
 //Home Appliances
 CREATE
@@ -205,4 +235,7 @@ CREATE
 	(LightingSystem)-[:NEED {quantity:1}]->(Glass),
 	(TV)-[:NEED {quantity:2}]->(Plastic),
 	(TV)-[:NEED {quantity:2}]->(Glass),
-	(TV)-[:NEED {quantity:1}]->(ElectricalComponents)
+	(TV)-[:NEED {quantity:1}]->(ElectricalComponents),
+	(MicrowaveOven)-[:NEED {quantity:4}]->(Metal),
+	(MicrowaveOven)-[:NEED {quantity:1}]->(Glass),
+	(MicrowaveOven)-[:NEED {quantity:1}]->(ElectricalComponents)
