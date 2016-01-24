@@ -1,15 +1,16 @@
 //Buildings
+//attribute "parallel" set to true means you can build multiple ingredients at the same time
 CREATE
-	(Factory:Building {name:'Factory'}),
-	(BuildingSuppliesStore:Building {name:'Building Supplies Store'}),
-	(HardwareStore:Building {name:'Hardware Store'}),
-	(FurnitureStore:Building {name:'Furniture Store'}),
-	(FarmersMarket:Building {name:'Farmer\'s Market'}),
-	(GardeningSupplies:Building {name:'Gardening Supplies'}),
-	(DonutShop:Building {name:'Donut Shop'}),
-	(FastFoodRestaurant:Building {name:'Fast Food Restaurant'}),
-	(FashionStore:Building {name:'Fashion Store'}),
-	(HomeAppliances:Building {name:'Home Appliances'})
+	(Factory:Building {name:'Factory', parallel:true}),
+	(BuildingSuppliesStore:Building {name:'Building Supplies Store', parallel:false}),
+	(HardwareStore:Building {name:'Hardware Store', parallel:false}),
+	(FurnitureStore:Building {name:'Furniture Store', parallel:false}),
+	(FarmersMarket:Building {name:'Farmer\'s Market', parallel:false}),
+	(GardeningSupplies:Building {name:'Gardening Supplies', parallel:false}),
+	(DonutShop:Building {name:'Donut Shop', parallel:false}),
+	(FastFoodRestaurant:Building {name:'Fast Food Restaurant', parallel:false}),
+	(FashionStore:Building {name:'Fashion Store', parallel:false}),
+	(HomeAppliances:Building {name:'Home Appliances', parallel:false})
 
 //Factory
 CREATE
