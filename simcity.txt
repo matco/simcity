@@ -1,4 +1,17 @@
-//Factories
+//Buildings
+CREATE
+	(Factory:Building {name:'Factory'}),
+	(BuildingSuppliesStore:Building {name:'Building Supplies Store'}),
+	(HardwareStore:Building {name:'Hardware Store'}),
+	(FurnitureStore:Building {name:'Furniture Store'}),
+	(FarmersMarket:Building {name:'Farmer\'s Market'}),
+	(GardeningSupplies:Building {name:'Gardening Supplies'}),
+	(DonutShop:Building {name:'Donut Shop'}),
+	(FastFoodRestaurant:Building {name:'Fast Food Restaurant'}),
+	(FashionStore:Building {name:'Fashion Store'}),
+	(HomeAppliances:Building {name:'Home Appliances'})
+
+//Factory
 CREATE
 	(Metal:Ingredient {name:'Metal', time:1}),
 	(Wood:Ingredient {name:'Wood', time:3}),
@@ -12,6 +25,20 @@ CREATE
 	(AnimalFeed:Ingredient {name:'Animal Feed', time:360}),
 	(ElectricalComponents:Ingredient {name:'Electrical Components', time:420})
 
+CREATE
+	(Factory)-[:BUILD]->(Metal),
+	(Factory)-[:BUILD]->(Wood),
+	(Factory)-[:BUILD]->(Plastic),
+	(Factory)-[:BUILD]->(Seeds),
+	(Factory)-[:BUILD]->(Minerals),
+	(Factory)-[:BUILD]->(Chemicals),
+	(Factory)-[:BUILD]->(Textiles),
+	(Factory)-[:BUILD]->(SugarAndSpices),
+	(Factory)-[:BUILD]->(Glass),
+	(Factory)-[:BUILD]->(AnimalFeed),
+	(Factory)-[:BUILD]->(ElectricalComponents)
+
+
 //Building Supplies Store
 CREATE
 	(Nails:Ingredient {name:'Nails', time:5}),
@@ -20,6 +47,14 @@ CREATE
 	(Cement:Ingredient {name:'Cement', time:50}),
 	(Glue:Ingredient {name:'Glue', time:60}),
 	(Paint:Ingredient {name:'Paint', time:60})
+
+CREATE
+	(BuildingSuppliesStore)-[:BUILD]->(Nails),
+	(BuildingSuppliesStore)-[:BUILD]->(Planks),
+	(BuildingSuppliesStore)-[:BUILD]->(Bricks),
+	(BuildingSuppliesStore)-[:BUILD]->(Cement),
+	(BuildingSuppliesStore)-[:BUILD]->(Glue),
+	(BuildingSuppliesStore)-[:BUILD]->(Paint)
 
 //Hardware Store
 CREATE
@@ -30,13 +65,28 @@ CREATE
 	(Ladder:Ingredient {name:'Ladder', time:60}),
 	(Drill:Ingredient {name:'Drill', time:120})
 
-//Furnitures Store
+CREATE
+	(HardwareStore)-[:BUILD]->(Hammer),
+	(HardwareStore)-[:BUILD]->(MeasuringTape),
+	(HardwareStore)-[:BUILD]->(Shovel),
+	(HardwareStore)-[:BUILD]->(CookingUtensils),
+	(HardwareStore)-[:BUILD]->(Ladder),
+	(HardwareStore)-[:BUILD]->(Drill)
+
+//Furniture Store
 CREATE
 	(Chairs:Ingredient {name:'Chairs', time:20}),
 	(Tables:Ingredient {name:'Tables', time:30}),
 	(HomeTextiles:Ingredient {name:'Home Textiles', time:75}),
 	(Cupboard:Ingredient {name:'Cupboard', time:45}),
 	(Couch:Ingredient {name:'Couch', time:150})
+
+CREATE
+	(FurnitureStore)-[:BUILD]->(Chairs),
+	(FurnitureStore)-[:BUILD]->(Tables),
+	(FurnitureStore)-[:BUILD]->(HomeTextiles),
+	(FurnitureStore)-[:BUILD]->(Cupboard),
+	(FurnitureStore)-[:BUILD]->(Couch)
 
 //Farmer's Market
 CREATE
@@ -48,6 +98,15 @@ CREATE
 	(Cheese:Ingredient {name:'Cheese', time:105}),
 	(Beef:Ingredient {name:'Beef', time:150})
 
+CREATE
+	(FarmersMarket)-[:BUILD]->(Vegetables),
+	(FarmersMarket)-[:BUILD]->(FlourBag),
+	(FarmersMarket)-[:BUILD]->(FruitAndBerries),
+	(FarmersMarket)-[:BUILD]->(Cream),
+	(FarmersMarket)-[:BUILD]->(Corn),
+	(FarmersMarket)-[:BUILD]->(Cheese),
+	(FarmersMarket)-[:BUILD]->(Beef)
+
 //Gardening Supplies
 CREATE
 	(Grass:Ingredient {name:'Grass', time:30}),
@@ -56,6 +115,14 @@ CREATE
 	(FirePit:Ingredient {name:'Fire Pit', time:240}),
 	(LawnMower:Ingredient {name:'Lawn Mower', time:120}),
 	(GardenGnomes:Ingredient {name:'Garden Gnomes', time:90})
+
+CREATE
+	(GardeningSupplies)-[:BUILD]->(Grass),
+	(GardeningSupplies)-[:BUILD]->(TreeSaplings),
+	(GardeningSupplies)-[:BUILD]->(GardenFurniture),
+	(GardeningSupplies)-[:BUILD]->(FirePit),
+	(GardeningSupplies)-[:BUILD]->(LawnMower),
+	(GardeningSupplies)-[:BUILD]->(GardenGnomes)
 
 //Donut Shop
 CREATE
@@ -66,6 +133,14 @@ CREATE
 	(FrozenYogurt:Ingredient {name:'Frozen Yogurt', time:240}),
 	(Coffee:Ingredient {name:'Coffee', time:60})
 
+CREATE
+	(DonutShop)-[:BUILD]->(Donuts),
+	(DonutShop)-[:BUILD]->(GreenSmoothie),
+	(DonutShop)-[:BUILD]->(BreadRoll),
+	(DonutShop)-[:BUILD]->(CherryCheesecake),
+	(DonutShop)-[:BUILD]->(FrozenYogurt),
+	(DonutShop)-[:BUILD]->(Coffee)
+
 //Fast Food Restaurant
 CREATE
 	(IceCreamSandwich:Ingredient {name:'Ice Cream Sandwich', time:14}),
@@ -75,6 +150,14 @@ CREATE
 	(LemonadeBottle:Ingredient {name:'Lemonade Bottle', time:60}),
 	(Popcorn:Ingredient {name:'Popcorn', time:30})
 
+CREATE
+	(FastFoodRestaurant)-[:BUILD]->(IceCreamSandwich),
+	(FastFoodRestaurant)-[:BUILD]->(Pizza),
+	(FastFoodRestaurant)-[:BUILD]->(Burgers),
+	(FastFoodRestaurant)-[:BUILD]->(CheeseFries),
+	(FastFoodRestaurant)-[:BUILD]->(LemonadeBottle),
+	(FastFoodRestaurant)-[:BUILD]->(Popcorn)
+
 //Fashion Store
 CREATE
 	(Cap:Ingredient {name:'Cap', time:60}),
@@ -83,6 +166,13 @@ CREATE
 	(BusinessSuits:Ingredient {name:'Business Suits', time:210}),
 	(Backpack:Ingredient {name:'Backpack', time:150})
 
+CREATE
+	(FashionStore)-[:BUILD]->(Cap),
+	(FashionStore)-[:BUILD]->(Shoes),
+	(FashionStore)-[:BUILD]->(Watch),
+	(FashionStore)-[:BUILD]->(BusinessSuits),
+	(FashionStore)-[:BUILD]->(Backpack)
+
 //Home Appliances
 CREATE
 	(BBQGrill:Ingredient {name:'BBQ Grill', time:165}),
@@ -90,6 +180,13 @@ CREATE
 	(LightingSystem:Ingredient {name:'Lighting System', time:105}),
 	(TV:Ingredient {name:'TV', time:150}),
 	(MicrowaveOven:Ingredient {name:'Microwave Oven', time:120})
+
+CREATE
+	(HomeAppliances)-[:BUILD]->(BBQGrill),
+	(HomeAppliances)-[:BUILD]->(Refrigerator),
+	(HomeAppliances)-[:BUILD]->(LightingSystem),
+	(HomeAppliances)-[:BUILD]->(TV),
+	(HomeAppliances)-[:BUILD]->(MicrowaveOven)
 
 //Building Supplies Store
 CREATE

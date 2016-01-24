@@ -42,6 +42,7 @@ On the way up, here are the ingredients that need "Fruit and berries":
 * Lemonade Bottle (1)
 
 # Queries
+## Dependencies
 Retrieve all ingredients that require "Fruit and berries", with the required quantity:
 ```
 MATCH (i:Ingredient)-[r:NEED]->(:Ingredient {name:"Fruit and Berries"})
@@ -80,4 +81,25 @@ Finally sum all quantities per ingredient:
 MATCH (:Ingredient {name: "Fruit and Berries"})-[r:NEED*]->(i:Ingredient)
 WHERE NOT (i)-->()
 RETURN i.name as Ingredient, SUM(REDUCE(quantities = 1, x IN r | quantities * x.quantity)) as Quantity;
+```
+
+## Dependencies with buildings
+Now, buildings nodes can be used to show where ingredients are built.
+Retrieve all ingredients that require "Fruit and berries", with the required quantity:
+```
+MATCH (b:Building)-[:BUILD]->(i:Ingredient)-[r:NEED]->(:Ingredient {name:"Fruit and Berries"})
+RETURN b.name as Building, i.name as Ingredient, r.quantity as Quantity;
+```
+
+Retrieve all required ingredients and quantities to make "Fruit and berries":
+```
+MATCH (:Ingredient {name:"Fruit and Berries"})-[r:NEED]->(i:Ingredient)<-[:BUILD]-(b:Building)
+RETURN i.name as Ingredient, r.quantity as Quantity, b.name as Building;
+```
+
+Retrieve all basic ingredients and quantities required to build ingredient "Fruit and Berries" (useless as basic ingredients are all built in building "Factory"):
+```
+MATCH (:Ingredient {name: "Fruit and Berries"})-[r:NEED*]->(i:Ingredient)<-[:BUILD]-(b:Building)
+WHERE NOT (i)-->()
+RETURN b.name as Building, i.name as Ingredient, SUM(REDUCE(quantities = 1, x IN r | quantities * x.quantity)) as Quantity;
 ```
