@@ -58,28 +58,28 @@ RETURN i.name as Ingredient, r.quantity as Quantity;
 Retrieve all basic ingredients required to build ingredient "Fruit and Berries":
 ```
 MATCH (:Ingredient {name: "Fruit and Berries"})-[NEED*]->(i:Ingredient)
-WHERE NOT (i)-->()
+WHERE NOT (i)-[:NEED]->()
 RETURN DISTINCT(i.name) as Ingredient;
 ```
 
 Retrieving quantities of basic ingredients is a bit trickier. First retrieve all basic ingredients with their associated relations:
 ```
 MATCH (:Ingredient {name: "Fruit and Berries"})-[r:NEED*]->(i:Ingredient)
-WHERE NOT (i)-->()
+WHERE NOT (i)-[:NEED]->()
 RETURN i.name as Ingredient, r as Relations;
 ```
 
-The, aggregate quantities:
+Then, aggregate quantities:
 ```
 MATCH (:Ingredient {name: "Fruit and Berries"})-[r:NEED*]->(i:Ingredient)
-WHERE NOT (i)-->()
+WHERE NOT (i)-[:NEED]->()
 RETURN i.name as Ingredient, REDUCE(quantities = 1, x IN r | quantities * x.quantity) as Quantity;
 ```
 
 Finally sum all quantities per ingredient:
 ```
 MATCH (:Ingredient {name: "Fruit and Berries"})-[r:NEED*]->(i:Ingredient)
-WHERE NOT (i)-->()
+WHERE NOT (i)-[:NEED]->()
 RETURN i.name as Ingredient, SUM(REDUCE(quantities = 1, x IN r | quantities * x.quantity)) as Quantity;
 ```
 
@@ -100,6 +100,6 @@ RETURN i.name as Ingredient, r.quantity as Quantity, b.name as Building;
 Retrieve all basic ingredients and quantities required to build ingredient "Fruit and Berries" (useless as basic ingredients are all built in building "Factory"):
 ```
 MATCH (:Ingredient {name: "Fruit and Berries"})-[r:NEED*]->(i:Ingredient)<-[:BUILD]-(b:Building)
-WHERE NOT (i)-->()
+WHERE NOT (i)-[:NEED]->()
 RETURN b.name as Building, i.name as Ingredient, SUM(REDUCE(quantities = 1, x IN r | quantities * x.quantity)) as Quantity;
 ```
