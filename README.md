@@ -5,7 +5,7 @@ You can find the game here https://play.google.com/store/apps/details?id=com.ea.
 
 # Requirements
 * Install Neo4j (sample queries have been tested with Neo4j v2.3.1).
-* Execute queries from file "simcity.txt" to load all ingredients.
+* Execute queries from file "data.txt" to load all ingredients.
 
 If you need to reset the database:
 ```

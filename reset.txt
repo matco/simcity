@@ -1,0 +1,16 @@
+//Remove data
+MATCH (i) DETACH DELETE i;
+
+//Drop schema
+//Building
+DROP CONSTRAINT ON (b:Building) ASSERT b.id IS UNIQUE;
+//Requires Neo4j Enterprise Edition
+//DROP CONSTRAINT ON (b:Building) ASSERT exists(b.id);
+//DROP CONSTRAINT ON (b:Building) ASSERT exists(b.name);
+
+//Ingredients
+DROP CONSTRAINT ON (i:Ingredient) ASSERT i.id IS UNIQUE;
+//Requires Neo4j Enterprise Edition
+//DROP CONSTRAINT ON (i:Ingredient) ASSERT exists(i.id);
+//DROP CONSTRAINT ON (i:Ingredient) ASSERT exists(i.name);
+//DROP CONSTRAINT ON (i:Ingredient) ASSERT exists(i.time);

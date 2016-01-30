@@ -1,15 +1,16 @@
-//Schema
-CREATE CONSTRAINT ON (b:Building) ASSERT b.id IS UNIQUE
+//Create schema
+CREATE CONSTRAINT ON (b:Building) ASSERT b.id IS UNIQUE;
 //Requires Neo4j Enterprise Edition
-//CREATE CONSTRAINT ON (b:Building) ASSERT exists(b.id)
-//CREATE CONSTRAINT ON (b:Building) ASSERT exists(b.name)
+//CREATE CONSTRAINT ON (b:Building) ASSERT exists(b.id);
+//CREATE CONSTRAINT ON (b:Building) ASSERT exists(b.name);
 
-CREATE CONSTRAINT ON (i:Ingredient) ASSERT i.id IS UNIQUE
+CREATE CONSTRAINT ON (i:Ingredient) ASSERT i.id IS UNIQUE;
 //Requires Neo4j Enterprise Edition
-//CREATE CONSTRAINT ON (i:Ingredient) ASSERT exists(i.id)
-//CREATE CONSTRAINT ON (i:Ingredient) ASSERT exists(i.name)
-//CREATE CONSTRAINT ON (i:Ingredient) ASSERT exists(i.time)
+//CREATE CONSTRAINT ON (i:Ingredient) ASSERT exists(i.id);
+//CREATE CONSTRAINT ON (i:Ingredient) ASSERT exists(i.name);
+//CREATE CONSTRAINT ON (i:Ingredient) ASSERT exists(i.time);
 
+//Add data
 //Buildings
 CREATE
 	(Factory:Building {id:'factory', name:'Factory'}),
@@ -346,4 +347,4 @@ CREATE
 	(TV)-[:NEED {quantity:1}]->(ElectricalComponents),
 	(MicrowaveOven)-[:NEED {quantity:4}]->(Metal),
 	(MicrowaveOven)-[:NEED {quantity:1}]->(Glass),
-	(MicrowaveOven)-[:NEED {quantity:1}]->(ElectricalComponents)
+	(MicrowaveOven)-[:NEED {quantity:1}]->(ElectricalComponents);
