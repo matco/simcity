@@ -141,7 +141,7 @@ CREATE
 	(GreenSmoothie:Ingredient {id:'green_smoothie', name:'Green Smoothie', time:30}),
 	(BreadRoll:Ingredient {id:'bread_roll', name:'Bread Roll', time:60}),
 	(CherryCheesecake:Ingredient {id:'cherry_cheesecake', name:'Cherry Cheesecake', time:90}),
-	(FrozenYogurt:Ingredient {id:'frozen_yoghurt', name:'Frozen Yogurt', time:240}),
+	(FrozenYogurt:Ingredient {id:'frozen_yogurt', name:'Frozen Yogurt', time:240}),
 	(Coffee:Ingredient {id:'coffee', name:'Coffee', time:60})
 
 CREATE
