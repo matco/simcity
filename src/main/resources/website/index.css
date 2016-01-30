@@ -1,0 +1,122 @@
+body {
+	font-family: Verdana;
+	font-size: 1em;
+	background-color: #3e4544;
+	margin: 2em auto;
+	width: 80%;
+	max-width: 50em;
+}
+h1 {
+	font-size: 3.5em;
+	text-shadow: 3px 3px black;
+	color: white;
+	text-align: center;
+}
+h2 {
+	font-size: 2em;
+	margin: 0;
+	padding: 0.3em 0.5em;
+	color: #3e4544;
+	border-bottom: 5px solid #4ab2e3;
+}
+h2 > img {
+	width: 64px;
+	margin-right: 1em;
+	vertical-align: middle;
+}
+button {
+	font-size: 1em;
+	color: white;
+	padding: 0.2em 1em;
+	background-color: #3e4544;
+	border-radius: 5px;
+	border: 0;
+	cursor: pointer;
+}
+button:hover {
+	color: #4ab2e3;
+}
+#recipe {
+	position: relative;
+}
+#recipe input {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0.3em;
+	font-size: 2.5em;
+	color: #3e4544;
+	text-align: center;
+	background-color: #e1eef8;
+	border: 5px solid #4ab2e3;
+	border-radius: 5px;
+}
+#recipe input:focus::-moz-placeholder {
+	color: transparent;
+}
+#recipe input:focus::-webkit-input-placeholder {
+	color: transparent;
+}
+#ingredients {
+	display: none;
+	position: absolute;
+	z-index: 100;
+	box-sizing: border-box;
+	width: 100%;
+	font-size: 2em;
+	text-align: left;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	background-color: #e1eef8;
+	border: 0.15em solid #4ab2e3;
+	border-radius: 0.2em;
+}
+#ingredients > li {
+	cursor: pointer;
+	color: #3e4544;
+	padding: 4px;
+}
+#ingredients > li.selected {
+	background-color: #84a49c;
+}
+#ingredients > li > img {
+	width: 32px;
+	margin-right: 10px;
+	vertical-align: middle;
+}
+#ingredients > li .highlight {
+	color: #4ab2e3;
+}
+#ingredient {
+	display: none;
+	margin-top: 2em;
+	background-color: #e1eef8;
+	border: 5px solid #4ab2e3;
+	border-radius: 5px;
+	text-align: center;
+}
+#ingredient p {
+	padding: 1em;
+	margin: 0;
+}
+#ingredient ul {
+	list-style-type: none;
+}
+#ingredient ul > li {
+	display: inline-block;
+	position: relative;
+	margin-right: 3em;
+}
+#ingredient ul > li > a > img {
+	width: 64px;
+	vertical-align: middle;
+}
+#ingredient ul > li > a > span {
+	position: absolute;
+	left: 48px;
+	bottom: 2px;
+	padding: 0.4em 0.7em;
+	background-color: red;
+	color: white;
+	border-radius: 1em;
+}

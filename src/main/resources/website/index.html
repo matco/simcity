@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Simcity</title>
+		<link href="index.css" rel="stylesheet" type="text/css" title="defaut" />
+		<script type="text/javascript" src="js/extension.js"></script>
+		<script type="text/javascript" src="js/dom_extension.js"></script>
+		<script type="text/javascript" src="js/hash.js"></script>
+		<script type="text/javascript" src="js/router.js"></script>
+		<script type="text/javascript" src="js/ingredients.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+	</head>
+	<body>
+		<h1>SimCity BuildIt</h1>
+		<form id="recipe">
+			<input name="ingredient" autocomplete="off" placeholder="Ingredient" />
+			<ul id="ingredients"></ul>
+		</form>
+		<div id="ingredient">
+			<h2 id="ingredient_title"></h2>
+			<p id="ingredient_basic">Build it directly in the factory!</p>
+			<table id="ingredient_dependencies"></table>
+		</div>
+	</body>
+</html>
