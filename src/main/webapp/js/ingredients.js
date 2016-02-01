@@ -6,7 +6,7 @@ var Ingredients = (function() {
 		var ingredient_li = document.createFullElement('li');
 		var ingredient_link = document.createFullElement('a', {href : '#ingredient=' + ingredient.id, title : ingredient.name});
 		ingredient_li.appendChild(ingredient_link);
-		ingredient_link.appendChild(document.createFullElement('img', {src : '../images/ingredients/' + ingredient.id + '.png'}));
+		ingredient_link.appendChild(document.createFullElement('img', {src : 'images/ingredients/' + ingredient.id + '.png'}));
 		ingredient_link.appendChild(document.createFullElement('span', {}, ingredient.quantity));
 		return ingredient_li;
 	}
@@ -23,7 +23,7 @@ var Ingredients = (function() {
 						//update title
 						var ingredient_title = document.getElementById('ingredient_title');
 						ingredient_title.clear();
-						ingredient_title.appendChild(document.createFullElement('img', {src : '../images/ingredients/' + ingredient.id + '.png'}));
+						ingredient_title.appendChild(document.createFullElement('img', {src : 'images/ingredients/' + ingredient.id + '.png'}));
 						ingredient_title.appendChild(document.createTextNode(ingredient.name));
 
 						if(dependencies.isEmpty()) {
@@ -44,7 +44,7 @@ var Ingredients = (function() {
 								dependencies_div.appendChild(depth_dependencies_ul);
 								//draw arrow
 								if(i > 1) {
-									dependencies_div.appendChild(document.createFullElement('img', {src : '../images/arrow.svg'}));
+									dependencies_div.appendChild(document.createFullElement('img', {src : 'images/arrow.svg'}));
 								}
 							}
 							document.getElementById('ingredient_basic').style.display = 'none';
@@ -57,7 +57,7 @@ var Ingredients = (function() {
 					}
 				}
 			);
-			xhr.open('GET', '/api/ingredient/' + ingredient.id + '/dependencies', true);
+			xhr.open('GET', 'api/ingredient/' + ingredient.id + '/dependencies', true);
 			xhr.send();
 			xhr.responseType = 'json';
 		},

@@ -16,7 +16,7 @@ function get_ingredients(callback) {
 			}
 		}
 	);
-	xhr.open('GET', '/api/ingredient', true);
+	xhr.open('GET', 'api/ingredient', true);
 	xhr.send();
 	xhr.responseType = 'json';
 }
