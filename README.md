@@ -105,12 +105,16 @@ RETURN b.name as Building, i.name as Ingredient, SUM(REDUCE(quantities = 1, x IN
 ```
 
 # Web application
-For those who just want to see the result, edit the file "src/main/resources/config.properties" to set the path where the Neo4j database will be saved (this must be an empty folder). You can then initialize the database:
+For those who just want to try the web application, here is what you need:
+* Java 8
+* Maven
+
+First, edit the file "src/main/resources/config.properties" to set the path where the Neo4j database will be saved (this must be an empty folder). You can then initialize the database:
 ```
 mvn test -Dtest=InitDatabase
 ```
 
-Finally, use the following command to launch the web app:
+Finally, use the following command to launch the server:
 ```
-mvn exec:java
+mvn jetty:run
 ```
