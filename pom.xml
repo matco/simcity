@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>simcity</name>
+	<name>SimCity BuildIt Helper</name>
 	<url>https://www.matco.name/projects.html#simcity</url>
 
 	<scm>
