@@ -12,7 +12,6 @@ public class ObjectMapperResolver implements ContextResolver<ObjectMapper> {
 	private final ObjectMapper mapper;
 
 	public ObjectMapperResolver() {
-		System.out.println("Creating custom object mapper");
 		mapper = new ObjectMapper();
 		mapper.enable(SerializationFeature.INDENT_OUTPUT);
 	}

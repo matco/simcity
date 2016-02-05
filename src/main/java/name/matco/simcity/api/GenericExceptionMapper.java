@@ -14,7 +14,7 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 	public Response toResponse(final Throwable exception) {
 		exception.printStackTrace();
 		return Response
-				.status(Response.Status.INTERNAL_SERVER_ERROR)
+				.serverError()
 				.type(MediaType.APPLICATION_JSON)
 				.entity(Collections.singletonMap("message", exception.getMessage()))
 				.build();
