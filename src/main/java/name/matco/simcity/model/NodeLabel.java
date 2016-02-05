@@ -1,6 +1,8 @@
 package name.matco.simcity.model;
 
-public enum NodeLabel {
+import org.neo4j.graphdb.Label;
+
+public enum NodeLabel implements Label {
 
 	BUILDING {
 		@Override

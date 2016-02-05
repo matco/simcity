@@ -1,6 +1,8 @@
 package name.matco.simcity.model;
 
-public enum NodeRelation {
+import org.neo4j.graphdb.RelationshipType;
+
+public enum NodeRelation implements RelationshipType {
 
 	NEED, BUILD;
 }
