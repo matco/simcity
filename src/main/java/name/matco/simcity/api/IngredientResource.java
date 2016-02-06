@@ -14,19 +14,19 @@ public class IngredientResource extends NodeResource {
 
 	@Override
 	public NodeLabel getNodeType() {
-		return NodeLabel.INGREDIENT;
+		return NodeLabel.Ingredient;
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response allIngredients() {
+	public Response allIngredients() throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
 		return getAllNodes();
 	}
 
 	@GET
 	@Path("/{id:[a-z_]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getIngredient(@PathParam("id") final String id) {
+	public Response getIngredient(@PathParam("id") final String id) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
 		return getNode(id);
 	}
 

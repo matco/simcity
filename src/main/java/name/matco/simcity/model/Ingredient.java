@@ -4,5 +4,6 @@ public class Ingredient {
 
 	public String id;
 	public String name;
-	public int time;
+	public Long time;
+
 }
