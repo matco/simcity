@@ -239,7 +239,7 @@ CREATE
 	(Tables)-[:NEED {quantity:1}]->(Planks),
 	(Tables)-[:NEED {quantity:2}]->(Nails),
 	(Tables)-[:NEED {quantity:1}]->(Hammer),
-	(HomeTextiles)-[:NEED {quantity:1}]->(Textiles),
+	(HomeTextiles)-[:NEED {quantity:2}]->(Textiles),
 	(HomeTextiles)-[:NEED {quantity:1}]->(MeasuringTape),
 	(Cupboard)-[:NEED {quantity:2}]->(Planks),
 	(Cupboard)-[:NEED {quantity:2}]->(Glass),
