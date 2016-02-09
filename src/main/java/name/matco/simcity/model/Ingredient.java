@@ -1,6 +1,7 @@
 package name.matco.simcity.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -13,4 +14,8 @@ public class Ingredient {
 	public Long time;
 
 	public List<Dependency> dependencies;
+
+	public Optional<Dependency> getDependency(final String id) {
+		return dependencies.stream().filter((final Dependency d) -> d.id.equals(id)).findFirst();
+	}
 }

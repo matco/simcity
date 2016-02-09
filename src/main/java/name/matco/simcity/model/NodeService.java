@@ -17,9 +17,13 @@ import name.matco.simcity.App;
 public class NodeService {
 
 	public static Object fromNode(final Node node, final NodeLabel label) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
-		final Object object = label.getLabelClass().newInstance();
+		return fromNode(node, label.getLabelClass());
+	}
+
+	public static Object fromNode(final Node node, final Class<?> nodeClass) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
+		final Object object = nodeClass.newInstance();
 		for(final Entry<String, Object> entry : node.getAllProperties().entrySet()) {
-			final Field field = label.getLabelClass().getDeclaredField(entry.getKey());
+			final Field field = nodeClass.getField(entry.getKey());
 			field.set(object, entry.getValue());
 		}
 		return object;
