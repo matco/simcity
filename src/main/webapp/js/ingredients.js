@@ -9,7 +9,7 @@ var Ingredients = (function() {
 		XLINK : 'http://www.w3.org/1999/xlink'
 	};
 
-	const INGREDIENT_SIZE = 20;
+	const INGREDIENT_SIZE = 64;
 
 	function get_ingredient_level(ingredient) {
 		if(!ingredient.dependencies) {
@@ -59,17 +59,23 @@ var Ingredients = (function() {
 		var image_properties = {
 			x : 0,
 			y : 0,
-			height : INGREDIENT_SIZE + 'px',
-			width : INGREDIENT_SIZE + 'px'
+			height : INGREDIENT_SIZE,
+			width : INGREDIENT_SIZE
 		};
 		var image = document.createFullElementNS(SVG.Namespaces.SVG, 'image', image_properties);
 		image.setAttributeNS(SVG.Namespaces.XLINK, 'xlink:href', 'images/ingredients/' + ingredient.id + '.png');
 		link.appendChild(image);
 		//quantity
-		var quantity_circle = document.createFullElementNS(SVG.Namespaces.SVG, 'circle', {cx : INGREDIENT_SIZE - 5, cy : INGREDIENT_SIZE - 5, r : 4, style : 'opacity: 0.9; fill: red;'});
+		var quantity_circle = document.createFullElementNS(SVG.Namespaces.SVG, 'circle', {cx : INGREDIENT_SIZE - 10, cy : INGREDIENT_SIZE - 10, r : 10, style : 'opacity: 0.8; fill: red;'});
 		link.appendChild(quantity_circle);
 		var quantity_text_size = get_quantity_text_size(quantity);
-		var quantity_text = document.createFullElementNS(SVG.Namespaces.SVG, 'text', {x : INGREDIENT_SIZE - 7, y : INGREDIENT_SIZE - 3, style : 'font-size: ' + quantity_text_size + '; fill: white;'}, quantity);
+		var quantity_text_properties = {
+			x : INGREDIENT_SIZE - 10,
+			y : INGREDIENT_SIZE - 5,
+			'text-anchor' : 'middle',
+			style : 'font-size: ' + quantity_text_size + 'px; fill: white;'
+		};
+		var quantity_text = document.createFullElementNS(SVG.Namespaces.SVG, 'text', quantity_text_properties, quantity);
 		link.appendChild(quantity_text);
 		//draw dependencies
 		var ingredient_width = get_ingredient_basic_dependencies_number(ingredient) * INGREDIENT_SIZE;
@@ -81,17 +87,17 @@ var Ingredients = (function() {
 			var dependency_x = dependency_offset + dependency_width / 2;
 			dependency_offset += dependency_width;
 
-			var dependency_y = get_ingredient_level(dependency) * (INGREDIENT_SIZE + 10);
+			var dependency_y = get_ingredient_level(dependency) * (INGREDIENT_SIZE + 30);
 
-			var dependency_path = 'M ' + x + ' ' + ingredient_y + ' v -5 H ' + dependency_x + ' V ' + (dependency_y + INGREDIENT_SIZE);
-			svg.appendChild(document.createFullElementNS(SVG.Namespaces.SVG, 'path', {d : dependency_path, style : 'fill: none; stroke: black; stroke-width: 1.5px;'}));
+			var dependency_path = 'M ' + x + ' ' + ingredient_y + ' v -15 H ' + dependency_x + ' V ' + (dependency_y + INGREDIENT_SIZE);
+			svg.appendChild(document.createFullElementNS(SVG.Namespaces.SVG, 'path', {d : dependency_path, style : 'fill: none; stroke: black; stroke-width: 4;'}));
 
 			draw_ingredient(svg, dependency_x, dependency_y, dependency, quantity * dependency.quantity);
 		});
 	}
 
 	function get_quantity_text_size(quantity) {
-		return 6 / (quantity + '').length + 'px';
+		return 11 / (quantity + '').length + 3;
 	}
 
 	return {
@@ -108,7 +114,7 @@ var Ingredients = (function() {
 						var dependency_factor = parseInt(dependency.getAttribute('data-quantity-factor'));
 						var quantity_text = dependency.querySelector('text');
 						var quantity = new_quantity * dependency_factor;
-						quantity_text.style.fontSize = get_quantity_text_size(quantity);
+						quantity_text.style.fontSize = get_quantity_text_size(quantity) + 'px';
 						quantity_text.textContent = quantity;
 					});
 				}
@@ -151,12 +157,13 @@ var Ingredients = (function() {
 						else {
 							//find selected ingredient level
 							var ingredient_level = get_ingredient_level(ingredient);
-							var ingredient_dependencies_number = get_ingredient_dependencies_number(ingredient);
+							var ingredient_dependencies_number = get_ingredient_basic_dependencies_number(ingredient);
 
 							//calculate required svg viewbox
 							var x_max = ingredient_dependencies_number * INGREDIENT_SIZE;
-							var y_max = ingredient_level * (INGREDIENT_SIZE + 10);
-							ingredient_dependencies.setAttribute('viewBox', '0 0 ' + x_max + ' ' + (y_max + INGREDIENT_SIZE));
+							var y_max = ingredient_level * (INGREDIENT_SIZE + 30);
+							ingredient_dependencies.style.width = x_max + 'px';
+							ingredient_dependencies.style.height = (y_max + INGREDIENT_SIZE) + 'px';
 							ingredient_dependencies.style.display = 'block';
 
 							draw_ingredient(ingredient_dependencies, x_max / 2, y_max, ingredient, 1);

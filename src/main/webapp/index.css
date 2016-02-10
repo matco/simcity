@@ -108,6 +108,5 @@ button:hover {
 	margin: 0;
 }
 #ingredient svg {
-	width: 100%;
-	height: 400px;
+	margin: 10px auto 10px auto;
 }
