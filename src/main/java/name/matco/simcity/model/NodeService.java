@@ -2,15 +2,17 @@ package name.matco.simcity.model;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.Path;
+import org.neo4j.graphdb.Relationship;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.kernel.impl.core.NodeProxy;
 
 import name.matco.simcity.App;
 
@@ -37,16 +39,35 @@ public class NodeService {
 		try (final Transaction transaction = database.beginTx(); final Result result = database.execute(query)) {
 			while (result.hasNext()) {
 				final Map<String, Object> row = result.next();
-				if (row.size() == 1 && row.values().iterator().next() instanceof NodeProxy) {
-					final NodeProxy value = (NodeProxy) row.values().iterator().next();
-					// if row result is only an entire node, flatten only node properties
-					results.add(value.getAllProperties());
-				} else {
+				final boolean managed = false;
+				if (row.size() == 1) {
+					final Object value = row.values().iterator().next();
+					// if row result is only a node, flatten only node properties
+					if(value instanceof Node) {
+						results.add(((Node) value).getAllProperties());
+					}
+					// if row result is only a path, add nodes and relationship properties
+					else if(value instanceof Path) {
+						final Map<String, Object> path = new LinkedHashMap<>();
+						final List<Map<String, Object>> nodeProperties = new ArrayList<>();
+						path.put("nodes", nodeProperties);
+						for(final Node node : ((Path) value).nodes()) {
+							nodeProperties.add(node.getAllProperties());
+						}
+						final List<Map<String, Object>> relationshipProperties = new ArrayList<>();
+						path.put("relationships", relationshipProperties);
+						for(final Relationship relationship : ((Path) value).relationships()) {
+							relationshipProperties.add(relationship.getAllProperties());
+						}
+						results.add(path);
+					}
+				}
+				if(!managed) {
 					results.add(row);
 				}
+				transaction.success();
 			}
-			transaction.success();
+			return results;
 		}
-		return results;
 	}
 }
