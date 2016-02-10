@@ -44,6 +44,7 @@ var ingredients;
 	window.addEventListener(
 		'load',
 		function() {
+			Ingredients.Init();
 			get_ingredients(function() {
 
 				Forms.Autocomplete(

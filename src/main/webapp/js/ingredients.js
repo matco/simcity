@@ -49,7 +49,7 @@ var Ingredients = (function() {
 		var ingredient_x = (x - INGREDIENT_SIZE / 2);
 		var ingredient_y = y;
 
-		var group = document.createFullElementNS(SVG.Namespaces.SVG, 'g', {transform : 'translate(' + ingredient_x + ',' + ingredient_y + ')'});
+		var group = document.createFullElementNS(SVG.Namespaces.SVG, 'g', {transform : 'translate(' + ingredient_x + ',' + ingredient_y + ')', 'data-quantity-factor' : ingredient.quantity || 1});
 		svg.appendChild(group);
 		//link
 		var link = document.createFullElementNS(SVG.Namespaces.SVG, 'a', {title : ingredient.name});
@@ -66,12 +66,11 @@ var Ingredients = (function() {
 		image.setAttributeNS(SVG.Namespaces.XLINK, 'xlink:href', 'images/ingredients/' + ingredient.id + '.png');
 		link.appendChild(image);
 		//quantity
-		if(quantity) {
-			var quantity_circle = document.createFullElementNS(SVG.Namespaces.SVG, 'circle', {cx : INGREDIENT_SIZE - 5, cy : INGREDIENT_SIZE - 5, r : 4, style : 'opacity: 0.9; fill: red;'});
-			link.appendChild(quantity_circle);
-			var quantity_text = document.createFullElementNS(SVG.Namespaces.SVG, 'text', {x : INGREDIENT_SIZE - 7, y : INGREDIENT_SIZE - 3, style : 'font-size: 6px; fill: white;'}, quantity);
-			link.appendChild(quantity_text);
-		}
+		var quantity_circle = document.createFullElementNS(SVG.Namespaces.SVG, 'circle', {cx : INGREDIENT_SIZE - 5, cy : INGREDIENT_SIZE - 5, r : 4, style : 'opacity: 0.9; fill: red;'});
+		link.appendChild(quantity_circle);
+		var quantity_text_size = get_quantity_text_size(quantity);
+		var quantity_text = document.createFullElementNS(SVG.Namespaces.SVG, 'text', {x : INGREDIENT_SIZE - 7, y : INGREDIENT_SIZE - 3, style : 'font-size: ' + quantity_text_size + '; fill: white;'}, quantity);
+		link.appendChild(quantity_text);
 		//draw dependencies
 		var ingredient_width = get_ingredient_basic_dependencies_number(ingredient) * INGREDIENT_SIZE;
 		var dependency_offset = x - ingredient_width / 2;
@@ -87,11 +86,40 @@ var Ingredients = (function() {
 			var dependency_path = 'M ' + x + ' ' + ingredient_y + ' v -5 H ' + dependency_x + ' V ' + (dependency_y + INGREDIENT_SIZE);
 			svg.appendChild(document.createFullElementNS(SVG.Namespaces.SVG, 'path', {d : dependency_path, style : 'fill: none; stroke: black; stroke-width: 1.5px;'}));
 
-			draw_ingredient(svg, dependency_x, dependency_y, dependency, dependency.quantity);
+			draw_ingredient(svg, dependency_x, dependency_y, dependency, quantity * dependency.quantity);
 		});
 	}
 
+	function get_quantity_text_size(quantity) {
+		return 6 / (quantity + '').length + 'px';
+	}
+
 	return {
+		Init : function() {
+			var ingredient_dependencies = document.getElementById('ingredient_dependencies');
+			function ingredient_quantity_listener(event) {
+				Event.stop(event);
+				//retrieve current quantity
+				var current_quantity = parseInt(ingredient_dependencies.querySelector('text').textContent);
+				var operand = parseInt(this.dataset.quantityOperand);
+				var new_quantity = current_quantity + operand;
+				if(new_quantity > 0) {
+					ingredient_dependencies.querySelectorAll('g').forEach(function(dependency) {
+						var dependency_factor = parseInt(dependency.getAttribute('data-quantity-factor'));
+						var quantity_text = dependency.querySelector('text');
+						var quantity = new_quantity * dependency_factor;
+						quantity_text.style.fontSize = get_quantity_text_size(quantity);
+						quantity_text.textContent = quantity;
+					});
+				}
+				else {
+					console.log('Unable to set a negative quantity');
+				}
+			}
+			document.getElementById('ingredient').querySelectorAll('[data-quantity-operand]').forEach(function(link) {
+				link.addEventListener('click', ingredient_quantity_listener);
+			});
+		},
 		Open : function(ingredient) {
 			var xhr = new XMLHttpRequest();
 			xhr.addEventListener(
@@ -108,10 +136,14 @@ var Ingredients = (function() {
 
 						//reset ui
 						var ingredient_basic = document.getElementById('ingredient_basic');
-						var ingredient_dependencies = document.getElementById('ingredient_dependencies');
 						ingredient_basic.style.display = 'none';
+						var ingredient_dependencies = document.getElementById('ingredient_dependencies');
 						ingredient_dependencies.clear();
 						ingredient_dependencies.style.display = 'none';
+						var ingredient_operations = document.querySelectorAll('#ingredient [data-quantity-operand]');
+						ingredient_operations.forEach(function(link) {
+							link.style.display = 'none';
+						});
 
 						if(!ingredient.dependencies || ingredient.dependencies.isEmpty()) {
 							ingredient_basic.style.display = 'block';
@@ -127,8 +159,14 @@ var Ingredients = (function() {
 							ingredient_dependencies.setAttribute('viewBox', '0 0 ' + x_max + ' ' + (y_max + INGREDIENT_SIZE));
 							ingredient_dependencies.style.display = 'block';
 
-							draw_ingredient(ingredient_dependencies, x_max / 2, y_max, ingredient);
+							draw_ingredient(ingredient_dependencies, x_max / 2, y_max, ingredient, 1);
+
+							ingredient_operations.forEach(function(link) {
+								link.style.display = 'inline';
+							});
 						}
+
+						//display ingredient panel
 						document.getElementById('ingredient').style.display = 'block';
 					}
 					else {
