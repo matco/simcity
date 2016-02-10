@@ -99,24 +99,7 @@ button:hover {
 	padding: 1em;
 	margin: 0;
 }
-#ingredient ul {
-	list-style-type: none;
-}
-#ingredient ul > li {
-	display: inline-block;
-	position: relative;
-	margin-right: 3em;
-}
-#ingredient ul > li > a > img {
-	width: 64px;
-	vertical-align: middle;
-}
-#ingredient ul > li > a > span {
-	position: absolute;
-	left: 48px;
-	bottom: 2px;
-	padding: 0.4em 0.7em;
-	background-color: red;
-	color: white;
-	border-radius: 1em;
+#ingredient svg {
+	width: 100%;
+	height: 400px;
 }
