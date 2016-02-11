@@ -2,14 +2,14 @@
 
 var Ingredients = (function() {
 
-	const SVG = {}
+	var SVG = {}
 	SVG.Namespaces = {
 		SVG : 'http://www.w3.org/2000/svg',
 		XHTML : 'http://www.w3.org/1999/xhtml',
 		XLINK : 'http://www.w3.org/1999/xlink'
 	};
 
-	const INGREDIENT_SIZE = 64;
+	var INGREDIENT_SIZE = 64;
 
 	function get_ingredient_level(ingredient) {
 		if(!ingredient.dependencies) {
