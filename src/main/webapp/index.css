@@ -91,7 +91,7 @@ button:hover {
 	text-align: center;
 }
 #ingredient > h2 > a {
-	font-size: 0.3em;
+	font-size: 0.5em;
 	text-decoration: none;
 	padding: 0.4em 0.7em;
 	color: white;
@@ -109,4 +109,14 @@ button:hover {
 }
 #ingredient svg {
 	margin: 10px auto 10px auto;
+}
+
+@media (max-width: 800px) {
+	body {
+		width: calc(100% - 1em);
+		font-size: 0.4em;
+	}
+	#ingredient > h2 > span > img {
+		display: none;
+	}
 }

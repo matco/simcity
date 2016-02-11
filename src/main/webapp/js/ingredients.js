@@ -9,7 +9,7 @@ var Ingredients = (function() {
 		XLINK : 'http://www.w3.org/1999/xlink'
 	};
 
-	var INGREDIENT_SIZE = 64;
+	var INGREDIENT_SIZE = window.matchMedia('(max-width: 800px)').matches ? 32 : 64;
 
 	function get_ingredient_level(ingredient) {
 		if(!ingredient.dependencies) {
