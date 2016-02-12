@@ -1,4 +1,4 @@
-package name.matco.simcity.api;
+package name.matco.simcity.api.resources;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package name.matco.simcity.api;
+package name.matco.simcity.api.resources;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
