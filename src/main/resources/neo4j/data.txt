@@ -344,7 +344,7 @@ CREATE
 	(LightingSystem)-[:NEED {quantity:1}]->(Glass),
 	(TV)-[:NEED {quantity:2}]->(Plastic),
 	(TV)-[:NEED {quantity:2}]->(Glass),
-	(TV)-[:NEED {quantity:1}]->(ElectricalComponents),
+	(TV)-[:NEED {quantity:2}]->(ElectricalComponents),
 	(MicrowaveOven)-[:NEED {quantity:4}]->(Metal),
 	(MicrowaveOven)-[:NEED {quantity:1}]->(Glass),
 	(MicrowaveOven)-[:NEED {quantity:1}]->(ElectricalComponents);
