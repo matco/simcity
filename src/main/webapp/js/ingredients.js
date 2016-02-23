@@ -148,7 +148,7 @@ var Ingredients = (function() {
 						ingredient_dependencies.style.display = 'none';
 						var ingredient_operations = document.querySelectorAll('#ingredient [data-quantity-operand]');
 						ingredient_operations.forEach(function(link) {
-							link.style.display = 'none';
+							link.style.visibility = 'hidden';
 						});
 
 						if(!ingredient.dependencies || ingredient.dependencies.isEmpty()) {
@@ -169,7 +169,7 @@ var Ingredients = (function() {
 							draw_ingredient(ingredient_dependencies, x_max / 2, y_max, ingredient, 1);
 
 							ingredient_operations.forEach(function(link) {
-								link.style.display = 'inline';
+								link.style.visibility = 'visible';
 							});
 						}
 
