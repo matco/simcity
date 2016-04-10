@@ -49,7 +49,7 @@ var Ingredients = (function() {
 		var ingredient_x = (x - INGREDIENT_SIZE / 2);
 		var ingredient_y = y;
 
-		var group = document.createFullElementNS(SVG.Namespaces.SVG, 'g', {transform : 'translate(' + ingredient_x + ',' + ingredient_y + ')', 'data-quantity-factor' : ingredient.quantity || 1});
+		var group = document.createFullElementNS(SVG.Namespaces.SVG, 'g', {transform : 'translate(' + ingredient_x + ',' + ingredient_y + ')', 'data-quantity-factor' : quantity});
 		svg.appendChild(group);
 		//link
 		var link = document.createFullElementNS(SVG.Namespaces.SVG, 'a', {title : ingredient.name});
