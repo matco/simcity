@@ -21,6 +21,7 @@ import org.neo4j.graphdb.traversal.Uniqueness;
 import name.matco.simcity.App;
 import name.matco.simcity.model.Dependency;
 import name.matco.simcity.model.Ingredient;
+import name.matco.simcity.model.NodeCreationException;
 import name.matco.simcity.model.NodeLabel;
 import name.matco.simcity.model.NodeRelation;
 import name.matco.simcity.model.NodeService;
@@ -35,21 +36,21 @@ public class IngredientResource extends NodeResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response allIngredients() throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
+	public Response allIngredients() throws NodeCreationException {
 		return getAllNodes();
 	}
 
 	@GET
 	@Path("/{id:[a-z_]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getIngredient(@PathParam("id") final String id) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
+	public Response getIngredient(@PathParam("id") final String id) throws NodeCreationException {
 		return getNode(id);
 	}
 
 	@GET
 	@Path("/{id:[a-z_]+}/dependencies")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getIngredientDependencies(@PathParam("id") final String id) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
+	public Response getIngredientDependencies(@PathParam("id") final String id) throws NodeCreationException {
 
 		try(final Transaction tx = App.getDatabase().beginTx()) {
 			//retrieve and create ingredient

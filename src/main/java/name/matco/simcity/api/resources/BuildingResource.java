@@ -7,6 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import name.matco.simcity.model.NodeCreationException;
 import name.matco.simcity.model.NodeLabel;
 
 @Path("building")
@@ -19,14 +20,14 @@ public class BuildingResource extends NodeResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response allBuildings() throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
+	public Response allBuildings() throws NodeCreationException {
 		return getAllNodes();
 	}
 
 	@GET
 	@Path("/{id:[a-z_]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getBuilding(@PathParam("id") final String id) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
+	public Response getBuilding(@PathParam("id") final String id) throws NodeCreationException {
 		return getNode(id);
 	}
 

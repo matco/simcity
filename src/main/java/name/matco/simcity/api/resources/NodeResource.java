@@ -22,6 +22,7 @@ import com.fasterxml.jackson.jaxrs.cfg.ObjectWriterInjector;
 import com.fasterxml.jackson.jaxrs.cfg.ObjectWriterModifier;
 
 import name.matco.simcity.App;
+import name.matco.simcity.model.NodeCreationException;
 import name.matco.simcity.model.NodeLabel;
 import name.matco.simcity.model.NodeService;
 
@@ -44,7 +45,7 @@ public abstract class NodeResource {
 		}
 	}
 
-	public Response getAllNodes() throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
+	public Response getAllNodes() throws NodeCreationException {
 		System.out.println(String.format("Retrieving all %s", getNodeType().getId()));
 		final List<Object> nodes = new ArrayList<>();
 		try(
@@ -58,7 +59,7 @@ public abstract class NodeResource {
 		return Response.ok(nodes).build();
 	}
 
-	public Response getNode(final String id) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
+	public Response getNode(final String id) throws NodeCreationException {
 		System.out.println(String.format("Retrieving %s %s", getNodeType().getId(), id));
 
 		Object object = null;

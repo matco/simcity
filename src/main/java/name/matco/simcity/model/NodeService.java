@@ -16,17 +16,22 @@ import name.matco.simcity.App;
 
 public class NodeService {
 
-	public static Object fromNode(final Node node, final NodeLabel label) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
+	public static Object fromNode(final Node node, final NodeLabel label) throws NodeCreationException {
 		return fromNode(node, label.getLabelClass());
 	}
 
-	public static Object fromNode(final Node node, final Class<?> nodeClass) throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
-		final Object object = nodeClass.newInstance();
-		for(final Entry<String, Object> entry : node.getAllProperties().entrySet()) {
-			final Field field = nodeClass.getField(entry.getKey());
-			field.set(object, entry.getValue());
+	public static Object fromNode(final Node node, final Class<?> nodeClass) throws NodeCreationException {
+		try {
+			final Object object = nodeClass.getDeclaredConstructor().newInstance();
+			for(final Entry<String, Object> entry : node.getAllProperties().entrySet()) {
+				final Field field = nodeClass.getField(entry.getKey());
+				field.set(object, entry.getValue());
+			}
+			return object;
 		}
-		return object;
+		catch(final Exception e) {
+			throw new NodeCreationException(nodeClass);
+		}
 	}
 
 	public static List<Map<String, Object>> executeQuery(final String query) {
