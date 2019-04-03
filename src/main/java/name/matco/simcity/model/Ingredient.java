@@ -15,7 +15,7 @@ public class Ingredient {
 
 	public List<Dependency> dependencies;
 
-	public Optional<Dependency> getDependency(final String id) {
-		return dependencies.stream().filter((final Dependency d) -> d.id.equals(id)).findFirst();
+	public Optional<Dependency> getDependency(final String dependencyId) {
+		return dependencies.stream().filter((final Dependency d) -> d.id.equals(dependencyId)).findFirst();
 	}
 }
