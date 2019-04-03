@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Result;
@@ -15,6 +17,8 @@ import org.neo4j.kernel.impl.core.NodeProxy;
 import name.matco.simcity.App;
 
 public class NodeService {
+
+	private static final Logger LOGGER = LogManager.getLogger(NodeService.class.getName());
 
 	public static Object fromNode(final Node node, final NodeLabel label) throws NodeCreationException {
 		return fromNode(node, label.getLabelClass());
@@ -38,7 +42,7 @@ public class NodeService {
 		final GraphDatabaseService database = App.getDatabase();
 		final List<Map<String, Object>> results = new ArrayList<>();
 
-		System.out.println(query);
+		LOGGER.info(query);
 		try (final Transaction transaction = database.beginTx(); final Result result = database.execute(query)) {
 			while (result.hasNext()) {
 				final Map<String, Object> row = result.next();

@@ -61,8 +61,8 @@ public class IngredientResource extends NodeResource {
 
 				//find dependencies
 				final TraversalDescription td = App.getDatabase().traversalDescription()
-						.relationships(NodeRelation.NEED, Direction.OUTGOING)
-						.uniqueness(Uniqueness.NONE);
+					.relationships(NodeRelation.NEED, Direction.OUTGOING)
+					.uniqueness(Uniqueness.NONE);
 				final Traverser traverser = td.traverse(node);
 				for(final org.neo4j.graphdb.Path path : traverser) {
 					//every path starts from our ingredient

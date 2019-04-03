@@ -7,11 +7,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import name.matco.simcity.model.NodeCreationException;
 import name.matco.simcity.model.NodeLabel;
 
 @Path("building")
 public class BuildingResource extends NodeResource {
+
+	private static final Logger LOGGER = LogManager.getLogger(BuildingResource.class.getName());
 
 	@Override
 	public NodeLabel getNodeType() {
@@ -35,7 +40,7 @@ public class BuildingResource extends NodeResource {
 	@Path("/{id:[a-z_]+}/ingredients")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getIngredient(@PathParam("id") final String id) {
-		System.out.println(String.format("Retrieving building ingredients for building %s" + id));
+		LOGGER.info("Retrieving building ingredients for building {}", id);
 		final String query = String.format("MATCH (b:Building {id : %s})-[:BUILD]->(i:Ingredient) RETURN i.id as id, i.name as name", id);
 		return executeQuery(query);
 	}

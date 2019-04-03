@@ -9,6 +9,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.ResourceIterator;
 import org.neo4j.graphdb.Transaction;
@@ -28,6 +30,8 @@ import name.matco.simcity.model.NodeService;
 
 public abstract class NodeResource {
 
+	private static final Logger LOGGER = LogManager.getLogger(NodeResource.class.getName());
+
 	public abstract NodeLabel getNodeType();
 
 	@QueryParam("pretty")
@@ -46,11 +50,11 @@ public abstract class NodeResource {
 	}
 
 	public Response getAllNodes() throws NodeCreationException {
-		System.out.println(String.format("Retrieving all %s", getNodeType().getId()));
+		LOGGER.info("Retrieving all {}", getNodeType().getId());
 		final List<Object> nodes = new ArrayList<>();
 		try(
-				final Transaction tx = App.getDatabase().beginTx();
-				final ResourceIterator<Node> result = App.getDatabase().findNodes(getNodeType())) {
+			final Transaction tx = App.getDatabase().beginTx();
+			final ResourceIterator<Node> result = App.getDatabase().findNodes(getNodeType())) {
 			while(result.hasNext()) {
 				nodes.add(NodeService.fromNode(result.next(), getNodeType()));
 			}
@@ -60,11 +64,11 @@ public abstract class NodeResource {
 	}
 
 	public Response getNode(final String id) throws NodeCreationException {
-		System.out.println(String.format("Retrieving %s %s", getNodeType().getId(), id));
+		LOGGER.info("Retrieving {} {}", getNodeType().getId(), id);
 
 		Object object = null;
 		try(
-				final Transaction tx = App.getDatabase().beginTx()) {
+			final Transaction tx = App.getDatabase().beginTx()) {
 			final Node node = App.getDatabase().findNode(getNodeType(), "id", id);
 			if(node != null) {
 				object = NodeService.fromNode(node, getNodeType());

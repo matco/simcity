@@ -6,6 +6,8 @@ import java.util.Properties;
 
 import javax.ws.rs.ApplicationPath;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -13,6 +15,8 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
 @ApplicationPath("api")
 public class App extends ResourceConfig {
+
+	private static final Logger LOGGER = LogManager.getLogger(App.class.getName());
 
 	private static Properties PROPERTIES;
 	private static GraphDatabaseService DATABASE;
@@ -24,8 +28,9 @@ public class App extends ResourceConfig {
 
 	public static GraphDatabaseService getDatabase() {
 		if(DATABASE == null) {
-			System.out.println(String.format("Open database with path %s", getAppProperties().getProperty("db.path")));
-			DATABASE = new GraphDatabaseFactory().newEmbeddedDatabase(new File(getAppProperties().getProperty("db.path")));
+			final String path = getAppProperties().getProperty("db.path");
+			LOGGER.info("Open database with path {}", path);
+			DATABASE = new GraphDatabaseFactory().newEmbeddedDatabase(new File(path));
 			Runtime.getRuntime().addShutdownHook(new Thread() {
 				@Override
 				public void run() {

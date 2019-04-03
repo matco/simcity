@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.QueryExecutionException;
 import org.neo4j.graphdb.Transaction;
@@ -13,6 +15,8 @@ import org.neo4j.graphdb.Transaction;
 import junit.framework.TestCase;
 
 public class InitDatabase extends TestCase {
+
+	private static final Logger LOGGER = LogManager.getLogger(InitDatabase.class.getName());
 
 	private void importStream(final GraphDatabaseService database, final InputStream stream, final boolean stopOnError) throws QueryExecutionException, IOException {
 
@@ -35,7 +39,7 @@ public class InitDatabase extends TestCase {
 						database.execute(query.toString());
 						transaction.success();
 					} catch (final Exception e) {
-						System.out.println(String.format("Error with query [%s]: %s", query, e.getMessage()));
+						LOGGER.error(String.format("Error with query [{}]: {}", query, e.getMessage()));
 						if(stopOnError) {
 							throw e;
 						}
