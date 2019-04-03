@@ -4,7 +4,7 @@
 
 	<groupId>name.matco</groupId>
 	<artifactId>simcity</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>SimCity BuildIt Helper</name>
@@ -17,9 +17,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jackson-version>2.9.7</jackson-version>
-		<jersey-version>2.27</jersey-version>
-		<jetty-version>9.4.12.v20180830</jetty-version>
+		<jackson-version>2.9.8</jackson-version>
+		<jersey-version>2.28</jersey-version>
+		<jetty-version>9.4.15.v20190215</jetty-version>
 	</properties>
 
 	<dependencies>
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j</artifactId>
-			<version>3.4.9</version>
+			<version>3.5.3</version>
 		</dependency>
 
 		<dependency>
@@ -102,10 +102,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5</version>
+				<version>3.8.0</version>
 				<configuration>
-					<source>10</source>
-					<target>10</target>
+					<source>11</source>
+					<target>11</target>
 				</configuration>
 			</plugin>
 
