@@ -39,7 +39,7 @@ public class InitDatabase extends TestCase {
 						database.execute(query.toString());
 						transaction.success();
 					} catch (final Exception e) {
-						LOGGER.error(String.format("Error with query [{}]: {}", query, e.getMessage()));
+						LOGGER.error("Error with query [{}]: {}", query, e.getMessage());
 						if(stopOnError) {
 							throw e;
 						}
