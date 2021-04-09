@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
-import javax.ws.rs.ApplicationPath;
+import jakarta.ws.rs.ApplicationPath;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

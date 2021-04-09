@@ -1,27 +1,16 @@
 package name.matco.simcity.api.resources;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.ResourceIterator;
 import org.neo4j.graphdb.Transaction;
-
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.util.DefaultIndenter;
-import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
-import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.jaxrs.cfg.EndpointConfigBase;
-import com.fasterxml.jackson.jaxrs.cfg.ObjectWriterInjector;
-import com.fasterxml.jackson.jaxrs.cfg.ObjectWriterModifier;
 
 import name.matco.simcity.App;
 import name.matco.simcity.model.NodeCreationException;
@@ -34,6 +23,7 @@ public abstract class NodeResource {
 
 	public abstract NodeLabel getNodeType();
 
+	/* disabled until Jackson moves to jakarta package
 	@QueryParam("pretty")
 	public void setPretty(final boolean pretty) {
 		if(pretty) {
@@ -47,7 +37,7 @@ public abstract class NodeResource {
 				}
 			});
 		}
-	}
+	}*/
 
 	public Response getAllNodes() throws NodeCreationException {
 		LOGGER.info("Retrieving all {}", getNodeType().getId());
