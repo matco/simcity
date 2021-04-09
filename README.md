@@ -111,7 +111,7 @@ For those who just want to try the web application, here is what you need:
 
 First, edit the file "src/main/resources/config.properties" to set the path where the Neo4j database will be saved (this must be an empty folder). You can then initialize the database:
 ```
-mvn test -Dtest=InitDatabase
+mvn compile exec:java -Dexec.mainClass="name.matco.simcity.InitDatabase"
 ```
 
 Finally, use the following command to launch the server:
