@@ -25,6 +25,12 @@ public class App extends ResourceConfig {
 	public App() {
 		packages("name.matco.simcity.api");
 		register(JacksonFeature.class);
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				shutdownDatabase();
+			}
+		});
 	}
 
 	public static GraphDatabaseService getDatabase() {
@@ -32,14 +38,12 @@ public class App extends ResourceConfig {
 			final String path = getAppProperties().getProperty("db.path");
 			LOGGER.info("Open database with path {}", path);
 			DATABASE = new GraphDatabaseFactory().newEmbeddedDatabase(new File(path));
-			Runtime.getRuntime().addShutdownHook(new Thread() {
-				@Override
-				public void run() {
-					DATABASE.shutdown();
-				}
-			});
 		}
 		return DATABASE;
+	}
+	
+	public static void shutdownDatabase() {
+		DATABASE.shutdown();
 	}
 
 	public static Properties getAppProperties() {
