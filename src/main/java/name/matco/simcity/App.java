@@ -2,6 +2,7 @@ package name.matco.simcity;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import jakarta.ws.rs.ApplicationPath;
@@ -44,8 +45,8 @@ public class App extends ResourceConfig {
 	public static Properties getAppProperties() {
 		if(PROPERTIES == null) {
 			PROPERTIES = new Properties();
-			try {
-				PROPERTIES.load(App.class.getResourceAsStream("/config.properties"));
+			try(InputStream stream = App.class.getResourceAsStream("/config.properties")) {
+				PROPERTIES.load(stream);
 			} catch (final IOException e) {
 				e.printStackTrace();
 			}
