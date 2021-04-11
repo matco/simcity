@@ -12,7 +12,7 @@ import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
-import org.neo4j.kernel.impl.core.NodeProxy;
+import org.neo4j.kernel.impl.core.NodeEntity;
 
 import name.matco.simcity.App;
 
@@ -43,18 +43,19 @@ public class NodeService {
 		final List<Map<String, Object>> results = new ArrayList<>();
 
 		LOGGER.info(query);
-		try (final Transaction transaction = database.beginTx(); final Result result = database.execute(query)) {
+		try(final Transaction tx = database.beginTx();
+			final Result result = tx.execute(query);
+		) {
 			while (result.hasNext()) {
 				final Map<String, Object> row = result.next();
-				if (row.size() == 1 && row.values().iterator().next() instanceof NodeProxy) {
-					final NodeProxy value = (NodeProxy) row.values().iterator().next();
+				if (row.size() == 1 && row.values().iterator().next() instanceof NodeEntity) {
+					final NodeEntity value = (NodeEntity) row.values().iterator().next();
 					// if row result is only an entire node, flatten only node properties
 					results.add(value.getAllProperties());
 				} else {
 					results.add(row);
 				}
 			}
-			transaction.success();
 		}
 		return results;
 	}

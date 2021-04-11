@@ -34,9 +34,9 @@ public class InitDatabase {
 			}
 			query.append(line);
 			if(line.endsWith(";")) {
-				try(final Transaction transaction = database.beginTx()) {
-					database.execute(query.toString());
-					transaction.success();
+				try(final Transaction tx = database.beginTx()) {
+					tx.execute(query.toString());
+					tx.commit();
 				} catch (final Exception e) {
 					LOGGER.error("Error with query [{}]: {}", query, e.getMessage());
 					if(stopOnError) {

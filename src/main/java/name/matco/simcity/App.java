@@ -1,8 +1,8 @@
 package name.matco.simcity;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.Properties;
 
 import jakarta.ws.rs.ApplicationPath;
@@ -11,8 +11,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.glassfish.jersey.jackson.JacksonFeature;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.neo4j.dbms.api.DatabaseManagementService;
+import org.neo4j.dbms.api.DatabaseManagementServiceBuilder;
 import org.neo4j.graphdb.GraphDatabaseService;
-import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 
 @ApplicationPath("api")
 public class App extends ResourceConfig {
@@ -20,6 +21,7 @@ public class App extends ResourceConfig {
 	private static final Logger LOGGER = LogManager.getLogger(App.class.getName());
 
 	private static Properties PROPERTIES;
+	private static DatabaseManagementService DATABASE_MANAGEMENT_SERVICE;
 	private static GraphDatabaseService DATABASE;
 
 	public App() {
@@ -37,13 +39,14 @@ public class App extends ResourceConfig {
 		if(DATABASE == null) {
 			final String path = getAppProperties().getProperty("db.path");
 			LOGGER.info("Open database with path {}", path);
-			DATABASE = new GraphDatabaseFactory().newEmbeddedDatabase(new File(path));
+			DATABASE_MANAGEMENT_SERVICE = new DatabaseManagementServiceBuilder(Path.of(path)).build();
+			DATABASE = DATABASE_MANAGEMENT_SERVICE.database(org.neo4j.configuration.GraphDatabaseSettings.DEFAULT_DATABASE_NAME);
 		}
 		return DATABASE;
 	}
 	
 	public static void shutdownDatabase() {
-		DATABASE.shutdown();
+		DATABASE_MANAGEMENT_SERVICE.shutdown();
 	}
 
 	public static Properties getAppProperties() {

@@ -90,7 +90,7 @@
 		<dependency>
 			<groupId>org.neo4j</groupId>
 			<artifactId>neo4j</artifactId>
-			<version>3.5.7</version>
+			<version>4.2.5</version>
 		</dependency>
 	</dependencies>
 

@@ -54,13 +54,13 @@ public class IngredientResource extends NodeResource {
 
 		try(final Transaction tx = App.getDatabase().beginTx()) {
 			//retrieve and create ingredient
-			final Node node = App.getDatabase().findNode(NodeLabel.Ingredient, "id", id);
+			final Node node = tx.findNode(NodeLabel.Ingredient, "id", id);
 			if(node != null) {
 				final Ingredient ingredient = (Ingredient) NodeService.fromNode(node, Ingredient.class);
 				ingredient.dependencies = new ArrayList<>();
 
 				//find dependencies
-				final TraversalDescription td = App.getDatabase().traversalDescription()
+				final TraversalDescription td = tx.traversalDescription()
 					.relationships(NodeRelation.NEED, Direction.OUTGOING)
 					.uniqueness(Uniqueness.NONE);
 				final Traverser traverser = td.traverse(node);

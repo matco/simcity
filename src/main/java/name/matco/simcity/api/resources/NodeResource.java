@@ -44,7 +44,7 @@ public abstract class NodeResource {
 		final List<Object> nodes = new ArrayList<>();
 		try(
 			final Transaction tx = App.getDatabase().beginTx();
-			final ResourceIterator<Node> result = App.getDatabase().findNodes(getNodeType())) {
+			final ResourceIterator<Node> result = tx.findNodes(getNodeType())) {
 			while(result.hasNext()) {
 				nodes.add(NodeService.fromNode(result.next(), getNodeType()));
 			}
@@ -59,7 +59,7 @@ public abstract class NodeResource {
 		Object object = null;
 		try(
 			final Transaction tx = App.getDatabase().beginTx()) {
-			final Node node = App.getDatabase().findNode(getNodeType(), "id", id);
+			final Node node = tx.findNode(getNodeType(), "id", id);
 			if(node != null) {
 				object = NodeService.fromNode(node, getNodeType());
 			}
