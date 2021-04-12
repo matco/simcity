@@ -1,20 +1,20 @@
-const Router = (function() {
+import {Ingredients} from './ingredients.js';
+import {Hash} from './tools/hash.js';
 
-	return {
-		SelectIngredient: function(ingredient) {
-			console.log(`Select ingredient ${ingredient.name}`);
-			Ingredients.Open(ingredient);
+export const Router ={
+	SelectIngredient: function(ingredient) {
+		console.log(`Select ingredient ${ingredient.name}`);
+		Ingredients.Open(ingredient.id);
 
-			//generate state
-			const state = {ingredient: ingredient.id};
-			const hash = Hash.Encode(state);
-			//push state if necessary
-			if(location.hash !== hash) {
-				history.pushState(state, `Simcity - ${ingredient.name}`, hash);
-			}
+		//generate state
+		const state = {ingredient: ingredient.id};
+		const hash = Hash.Encode(state);
+		//push state if necessary
+		if(location.hash !== hash) {
+			history.pushState(state, `Simcity - ${ingredient.name}`, hash);
 		}
-	};
-})();
+	}
+};
 
 window.addEventListener(
 	'hashchange',
@@ -24,7 +24,7 @@ window.addEventListener(
 		//node
 		if(data.hasOwnProperty('ingredient')) {
 			//retrieve ingredient
-			const ingredient = ingredients.find(Array.objectFilter({id: data.ingredient}));
+			const ingredient = Ingredients.GetIngredients().find(i => i.id === data.ingredient);
 			Router.SelectIngredient(ingredient);
 		}
 	}
