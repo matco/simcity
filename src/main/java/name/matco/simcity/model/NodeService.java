@@ -20,13 +20,9 @@ public class NodeService {
 
 	private static final Logger LOGGER = LogManager.getLogger(NodeService.class.getName());
 
-	public static Object fromNode(final Node node, final NodeLabel label) throws NodeCreationException {
-		return fromNode(node, label.getLabelClass());
-	}
-
-	public static Object fromNode(final Node node, final Class<?> nodeClass) throws NodeCreationException {
+	public static <T> T fromNode(final Node node, final Class<T> nodeClass) throws NodeCreationException {
 		try {
-			final Object object = nodeClass.getDeclaredConstructor().newInstance();
+			final T object = nodeClass.getDeclaredConstructor().newInstance();
 			for(final Entry<String, Object> entry : node.getAllProperties().entrySet()) {
 				final Field field = nodeClass.getField(entry.getKey());
 				field.set(object, entry.getValue());

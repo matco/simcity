@@ -1,5 +1,7 @@
 package name.matco.simcity.api.resources;
 
+import java.util.Collection;
+
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -10,11 +12,12 @@ import jakarta.ws.rs.core.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import name.matco.simcity.model.Building;
 import name.matco.simcity.model.NodeCreationException;
 import name.matco.simcity.model.NodeLabel;
 
 @Path("building")
-public class BuildingResource extends NodeResource {
+public class BuildingResource extends NodeResource<Building> {
 
 	private static final Logger LOGGER = LogManager.getLogger(BuildingResource.class.getName());
 
@@ -25,14 +28,14 @@ public class BuildingResource extends NodeResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response allBuildings() throws NodeCreationException {
+	public Collection<Building> allBuildings() throws NodeCreationException {
 		return getAllNodes();
 	}
 
 	@GET
 	@Path("/{id:[a-z_]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getBuilding(@PathParam("id") final String id) throws NodeCreationException {
+	public Building getBuilding(@PathParam("id") final String id) throws NodeCreationException {
 		return getNode(id);
 	}
 

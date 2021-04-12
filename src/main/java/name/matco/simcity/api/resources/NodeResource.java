@@ -1,9 +1,11 @@
 package name.matco.simcity.api.resources;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.core.Response;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +19,7 @@ import name.matco.simcity.model.NodeCreationException;
 import name.matco.simcity.model.NodeLabel;
 import name.matco.simcity.model.NodeService;
 
-public abstract class NodeResource {
+public abstract class NodeResource<T> {
 
 	private static final Logger LOGGER = LogManager.getLogger(NodeResource.class.getName());
 
@@ -39,35 +41,32 @@ public abstract class NodeResource {
 		}
 	}*/
 
-	public Response getAllNodes() throws NodeCreationException {
+	@SuppressWarnings("unchecked")
+	public Collection<T> getAllNodes() throws NodeCreationException {
 		LOGGER.info("Retrieving all {}", getNodeType().getId());
-		final List<Object> nodes = new ArrayList<>();
+		final List<T> nodes = new ArrayList<>();
 		try(
 			final Transaction tx = App.getDatabase().beginTx();
 			final ResourceIterator<Node> result = tx.findNodes(getNodeType())) {
 			while(result.hasNext()) {
-				nodes.add(NodeService.fromNode(result.next(), getNodeType()));
+				nodes.add((T) NodeService.fromNode(result.next(), getNodeType().getLabelClass()));
 			}
 		}
-
-		return Response.ok(nodes).build();
+		return nodes;
 	}
 
-	public Response getNode(final String id) throws NodeCreationException {
+	@SuppressWarnings("unchecked")
+	public T getNode(final String id) throws NodeCreationException {
 		LOGGER.info("Retrieving {} {}", getNodeType().getId(), id);
 
-		Object object = null;
 		try(
 			final Transaction tx = App.getDatabase().beginTx()) {
 			final Node node = tx.findNode(getNodeType(), "id", id);
 			if(node != null) {
-				object = NodeService.fromNode(node, getNodeType());
+				return (T) NodeService.fromNode(node, getNodeType().getLabelClass());
 			}
 		}
-		if(object != null) {
-			return Response.ok(object).build();
-		}
-		return Response.status(Response.Status.NOT_FOUND).build();
+		throw new NotFoundException();
 	}
 
 	public Response executeQuery(final String query) {

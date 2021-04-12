@@ -1,14 +1,15 @@
 package name.matco.simcity.api.resources;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.Node;
@@ -27,7 +28,7 @@ import name.matco.simcity.model.NodeRelation;
 import name.matco.simcity.model.NodeService;
 
 @Path("ingredient")
-public class IngredientResource extends NodeResource {
+public class IngredientResource extends NodeResource<Ingredient> {
 
 	@Override
 	public NodeLabel getNodeType() {
@@ -36,56 +37,56 @@ public class IngredientResource extends NodeResource {
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response allIngredients() throws NodeCreationException {
+	public Collection<Ingredient> allIngredients() throws NodeCreationException {
 		return getAllNodes();
 	}
 
 	@GET
 	@Path("/{id:[a-z_]+}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getIngredient(@PathParam("id") final String id) throws NodeCreationException {
+	public Ingredient getIngredient(@PathParam("id") final String id) throws NodeCreationException {
 		return getNode(id);
 	}
 
 	@GET
 	@Path("/{id:[a-z_]+}/dependencies")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getIngredientDependencies(@PathParam("id") final String id) throws NodeCreationException {
+	public Ingredient getIngredientDependencies(@PathParam("id") final String id) throws NodeCreationException {
 
 		try(final Transaction tx = App.getDatabase().beginTx()) {
 			//retrieve and create ingredient
 			final Node node = tx.findNode(NodeLabel.Ingredient, "id", id);
-			if(node != null) {
-				final Ingredient ingredient = (Ingredient) NodeService.fromNode(node, Ingredient.class);
-				ingredient.dependencies = new ArrayList<>();
+			if(node == null) {
+				throw new NotFoundException();
+			}
+			final Ingredient ingredient = NodeService.fromNode(node, Ingredient.class);
+			ingredient.dependencies = new ArrayList<>();
 
-				//find dependencies
-				final TraversalDescription td = tx.traversalDescription()
-					.relationships(NodeRelation.NEED, Direction.OUTGOING)
-					.uniqueness(Uniqueness.NONE);
-				final Traverser traverser = td.traverse(node);
-				for(final org.neo4j.graphdb.Path path : traverser) {
-					//every path starts from our ingredient
-					Ingredient currentIngredient = ingredient;
-					for(final Relationship relationship : path.relationships()) {
-						final String endNodeId = (String) relationship.getEndNode().getProperty("id");
-						//retrieve if dependency does not already exist
-						final Optional<Dependency> existingDependency = currentIngredient.getDependency(endNodeId);
-						if(!existingDependency.isPresent()) {
-							final Dependency dependency = (Dependency) NodeService.fromNode(relationship.getEndNode(), Dependency.class);
-							dependency.dependencies = new ArrayList<>();
-							dependency.quantity = (Long) relationship.getProperty("quantity");
-							currentIngredient.dependencies.add(dependency);
-							currentIngredient = dependency;
-						}
-						else {
-							currentIngredient = existingDependency.get();
-						}
+			//find dependencies
+			final TraversalDescription td = tx.traversalDescription()
+				.relationships(NodeRelation.NEED, Direction.OUTGOING)
+				.uniqueness(Uniqueness.NONE);
+			final Traverser traverser = td.traverse(node);
+			for(final org.neo4j.graphdb.Path path : traverser) {
+				//every path starts from our ingredient
+				Ingredient currentIngredient = ingredient;
+				for(final Relationship relationship : path.relationships()) {
+					final String endNodeId = (String) relationship.getEndNode().getProperty("id");
+					//retrieve if dependency does not already exist
+					final Optional<Dependency> existingDependency = currentIngredient.getDependency(endNodeId);
+					if(!existingDependency.isPresent()) {
+						final Dependency dependency = NodeService.fromNode(relationship.getEndNode(), Dependency.class);
+						dependency.dependencies = new ArrayList<>();
+						dependency.quantity = (Long) relationship.getProperty("quantity");
+						currentIngredient.dependencies.add(dependency);
+						currentIngredient = dependency;
+					}
+					else {
+						currentIngredient = existingDependency.get();
 					}
 				}
-				return Response.ok(ingredient).build();
 			}
-			return Response.status(Response.Status.NOT_FOUND).build();
+			return ingredient;
 		}
 	}
 
