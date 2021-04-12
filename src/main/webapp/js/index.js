@@ -24,7 +24,7 @@ function draw_ingredient(ingredient, value) {
 }
 
 function select_ingredient(ingredient_name) {
-	const ingredient = Ingredients.GetIngredients().find(i => i.name === ingredient_name);
+	const ingredient = Ingredients.GetIngredients().find(i => i.name.toLowerCase() === ingredient_name.toLowerCase());
 	if(ingredient) {
 		Router.SelectIngredient(ingredient);
 	}
