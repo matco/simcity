@@ -44,7 +44,7 @@ public class BuildingResource extends NodeResource<Building> {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getIngredient(@PathParam("id") final String id) {
 		LOGGER.info("Retrieving building ingredients for building {}", id);
-		final String query = String.format("MATCH (b:Building {id : %s})-[:BUILD]->(i:Ingredient) RETURN i.id as id, i.name as name", id);
+		final String query = String.format("MATCH (b:Building {id : \"%s\"})-[:BUILD]->(i:Ingredient) RETURN i.id as id, i.name as name", id);
 		return executeQuery(query);
 	}
 
