@@ -44,7 +44,7 @@ public class App extends ResourceConfig {
 		}
 		return DATABASE;
 	}
-	
+
 	public static void shutdownDatabase() {
 		DATABASE_MANAGEMENT_SERVICE.shutdown();
 	}
@@ -54,7 +54,8 @@ public class App extends ResourceConfig {
 			PROPERTIES = new Properties();
 			try(InputStream stream = App.class.getResourceAsStream("/config.properties")) {
 				PROPERTIES.load(stream);
-			} catch (final IOException e) {
+			}
+			catch(final IOException e) {
 				e.printStackTrace();
 			}
 		}

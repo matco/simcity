@@ -28,5 +28,6 @@ public enum NodeLabel implements Label {
 	};
 
 	public abstract String getId();
+
 	public abstract Class<?> getLabelClass();
 }

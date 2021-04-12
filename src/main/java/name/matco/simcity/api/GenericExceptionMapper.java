@@ -14,10 +14,10 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 	public Response toResponse(final Throwable exception) {
 		exception.printStackTrace();
 		return Response
-				.serverError()
-				.type(MediaType.APPLICATION_JSON)
-				.entity(Collections.singletonMap("message", exception.getMessage()))
-				.build();
+			.serverError()
+			.type(MediaType.APPLICATION_JSON)
+			.entity(Collections.singletonMap("message", exception.getMessage()))
+			.build();
 	}
 
 }

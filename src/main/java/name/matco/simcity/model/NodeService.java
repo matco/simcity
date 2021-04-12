@@ -43,16 +43,17 @@ public class NodeService {
 		final List<Map<String, Object>> results = new ArrayList<>();
 
 		LOGGER.info(query);
-		try(final Transaction tx = database.beginTx();
-			final Result result = tx.execute(query);
-		) {
-			while (result.hasNext()) {
+		try(
+			final Transaction tx = database.beginTx();
+			final Result result = tx.execute(query);) {
+			while(result.hasNext()) {
 				final Map<String, Object> row = result.next();
-				if (row.size() == 1 && row.values().iterator().next() instanceof NodeEntity) {
+				if(row.size() == 1 && row.values().iterator().next() instanceof NodeEntity) {
 					final NodeEntity value = (NodeEntity) row.values().iterator().next();
 					// if row result is only an entire node, flatten only node properties
 					results.add(value.getAllProperties());
-				} else {
+				}
+				else {
 					results.add(row);
 				}
 			}
