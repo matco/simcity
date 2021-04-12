@@ -1,11 +1,9 @@
-'use strict';
-
-var ingredients;
+let ingredients;
 
 (function() {
 
 	function get_ingredients(callback) {
-		var xhr = new XMLHttpRequest();
+		const xhr = new XMLHttpRequest();
 		xhr.addEventListener(
 			'load',
 			function(event) {
@@ -31,11 +29,11 @@ var ingredients;
 
 	function draw_ingredient(ingredient, value) {
 		//prepare regexp to highlight part of ingredient matching the search
-		var regexp = new RegExp('('+ value + ')', 'gi');
-		var ingredient_li = document.createElement('li');
-		ingredient_li.appendChild(document.createFullElement('img', {src : 'images/ingredients/' + ingredient.id + '.png'}));
+		const regexp = new RegExp(`(${value})`, 'gi');
+		const ingredient_li = document.createElement('li');
+		ingredient_li.appendChild(document.createFullElement('img', {src: `images/ingredients/${ingredient.id}.png`}));
 		//label
-		var ingredient_label = document.createElement('span');
+		const ingredient_label = document.createElement('span');
 		ingredient_label.innerHTML = ingredient.name.replace(regexp, '<span class="highlight">$1</span>');
 		ingredient_li.appendChild(ingredient_label);
 		return ingredient_li;
@@ -61,7 +59,7 @@ var ingredients;
 					'submit',
 					function(event) {
 						Event.stop(event);
-						var ingredient = ingredients.find(Array.objectFilter({'name' : this.value}));
+						const ingredient = ingredients.find(Array.objectFilter({'name': this.value}));
 						if(ingredient) {
 							Router.SelectIngredient(ingredient);
 						}
@@ -69,7 +67,7 @@ var ingredients;
 				);
 
 				//try to restore selected node
-				var event = new UIEvent('hashchange', {bubbles : true, cancelable : true, detail : 1});
+				const event = new UIEvent('hashchange', {bubbles: true, cancelable: true, detail: 1});
 				window.dispatchEvent(event);
 			});
 		}
