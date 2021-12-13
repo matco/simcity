@@ -56,7 +56,7 @@ public class App extends ResourceConfig {
 				PROPERTIES.load(stream);
 			}
 			catch(final IOException e) {
-				e.printStackTrace();
+				LOGGER.error("Unable to load configuration file", e);
 			}
 		}
 		return PROPERTIES;
