@@ -13,13 +13,6 @@ h1 {
 	color: white;
 	text-align: center;
 }
-h2 {
-	font-size: 2rem;
-	margin: 0;
-	padding: 0.3rem;
-	color: #3e4544;
-	border-bottom: 5px solid #4ab2e3;
-}
 
 #recipe {
 	position: relative;
@@ -81,15 +74,27 @@ h2 {
 	border: 5px solid #4ab2e3;
 	border-radius: 5px;
 }
+#ingredient > h2 {
+	display: flex;
+	font-size: 2rem;
+	margin: 0;
+	padding: 0.3rem;
+	color: #3e4544;
+	border-bottom: 5px solid #4ab2e3;
+}
 #ingredient > h2 > a {
-	display: inline-block;
 	width: 3.5rem;
 	font-size: 0.6em;
+	line-height: 4rem;
 	text-decoration: none;
-	padding: 0.5rem 0;
+	text-align: center;
+	margin: 0 0.5rem;
 	color: white;
 	background-color: #4ab2e3;
 	border-radius: 5px;
+}
+#ingredient > h2 > span {
+	flex-grow: 1;
 }
 #ingredient > h2 > span > img {
 	width: 64px;
