@@ -19,7 +19,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<log4j-version>2.18.0</log4j-version>
-		<jackson-version>2.13.3</jackson-version>
+		<jackson-version>2.13.4.1</jackson-version>
 		<jersey-version>3.0.3</jersey-version>
 		<jetty-version>11.0.7</jetty-version>
 	</properties>
