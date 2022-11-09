@@ -1,14 +1,14 @@
 //Create schema
-CREATE CONSTRAINT ON (b:Building) ASSERT b.id IS UNIQUE;
+CREATE CONSTRAINT FOR (b:Building) REQUIRE b.id IS UNIQUE;
 //Requires Neo4j Enterprise Edition
-//CREATE CONSTRAINT ON (b:Building) ASSERT exists(b.id);
-//CREATE CONSTRAINT ON (b:Building) ASSERT exists(b.name);
+//CREATE CONSTRAINT FOR (b:Building) REQUIRE exists(b.id);
+//CREATE CONSTRAINT FOR (b:Building) ASSERT exists(b.name);
 
-CREATE CONSTRAINT ON (i:Ingredient) ASSERT i.id IS UNIQUE;
+CREATE CONSTRAINT FOR (i:Ingredient) REQUIRE i.id IS UNIQUE;
 //Requires Neo4j Enterprise Edition
-//CREATE CONSTRAINT ON (i:Ingredient) ASSERT exists(i.id);
-//CREATE CONSTRAINT ON (i:Ingredient) ASSERT exists(i.name);
-//CREATE CONSTRAINT ON (i:Ingredient) ASSERT exists(i.time);
+//CREATE CONSTRAINT FOR (i:Ingredient) REQUIRE exists(i.id);
+//CREATE CONSTRAINT FOR (i:Ingredient) REQUIRE exists(i.name);
+//CREATE CONSTRAINT FOR (i:Ingredient) REQUIRE exists(i.time);
 
 //Add data
 //Buildings
