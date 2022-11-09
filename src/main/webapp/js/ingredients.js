@@ -143,7 +143,7 @@ export const Ingredients = {
 
 			//update title
 			const ingredient_title = document.getElementById('ingredient_title');
-			ingredient_title.clear();
+			ingredient_title.empty();
 			ingredient_title.appendChild(document.createFullElement('img', {src: `images/ingredients/${ingredient.id}.png`}));
 			ingredient_title.appendChild(document.createTextNode(ingredient.name));
 
@@ -151,7 +151,7 @@ export const Ingredients = {
 			const ingredient_basic = document.getElementById('ingredient_basic');
 			ingredient_basic.style.display = 'none';
 			const ingredient_dependencies = document.getElementById('ingredient_dependencies');
-			ingredient_dependencies.clear();
+			ingredient_dependencies.empty();
 			ingredient_dependencies.style.display = 'none';
 			const ingredient_operations = document.querySelectorAll('#ingredient [data-quantity-operand]');
 			ingredient_operations.forEach(function(link) {

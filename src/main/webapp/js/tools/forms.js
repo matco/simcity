@@ -1,10 +1,10 @@
 export const Forms = {
-	Autocomplete: function(input, list, items_provider, item_drawer, selection_callback, highlight_callback, update_callback) {
+Autocomplete: function(input, list, items_provider, item_drawer, selection_callback, highlight_callback, update_callback) {
 		let selection; //currently selected item
 		let candidates; //current candidate items
 
 		function destroy_list() {
-			list.clear();
+			list.empty();
 			list.style.display = 'none';
 			//stop listening keyboard
 			document.removeEventListener('keydown', manage_keys);
@@ -29,11 +29,13 @@ export const Forms = {
 			//replace selection with selected item in the list
 			if(selection) {
 				input.value = item_drawer(selection).dataset.value;
+				if(selection_callback) {
+					selection_callback.call(undefined, selection, input.value);
+				}
+				selection = undefined;
+				return true;
 			}
-			if(selection_callback) {
-				selection_callback.call(undefined, selection, input.value);
-			}
-			selection = undefined;
+			return false;
 		}
 
 		function manage_mouse_over() {
@@ -50,9 +52,10 @@ export const Forms = {
 		function manage_keys(event) {
 			//enter
 			if(event.key === 'Enter') {
-				manage_selection();
-				//avoid form submission
-				event.preventDefault();
+				if(manage_selection()) {
+					//disable form submission only if a selection has been made through the autocomplete
+					event.preventDefault();
+				}
 				return;
 			}
 			//escape

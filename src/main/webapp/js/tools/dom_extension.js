@@ -18,7 +18,7 @@ import './extension.js';
 
 //DOM
 //Node
-Node.prototype.clear = function() {
+Node.prototype.empty = function() {
 	while(this.firstChild) {
 		this.removeChild(this.firstChild);
 	}
@@ -38,7 +38,7 @@ Node.prototype.appendChildren = function(children) {
 };*/
 
 //Element
-Element.prototype.clear = function(selector) {
+Element.prototype.empty = function(selector) {
 	let children = this.childNodes.slice();
 	if(selector) {
 		children = children.filter(c => c.nodeType === Node.ELEMENT_NODE && /**@type {HTMLElement}*/ (c).matches(selector));
@@ -103,23 +103,13 @@ HTMLFormElement.prototype.enable = function() {
 //HTMLSelectElement
 /**
  * @type {Function}
- * @param {any[] | {}} entries - List of entries
+ * @param {string[][] | string[]} entries - List of entries
  * @param {boolean} [blank_entry] - Add or not a blank entry
  * @param {string[] | string} [selected_entries] - Entries that will be selected
  * @returns {HTMLSelectElement} - The select element that will be filled
  */
 HTMLSelectElement.prototype.fill = function(entries, blank_entry, selected_entries) {
-	//store options as a map to avoid duplicate keys while keeping order (map keeps order of insertion)
-	let options;
-	//an array can be provided
-	if(Array.isArray(entries)) {
-		//html options can only be strings
-		options = new Map(entries.map(e => [e, e.toString()]));
-	}
-	//or an object
-	else {
-		options = new Map(Object.entries(entries));
-	}
+	const options = entries.map(e => Array.isArray(e) ? e : [e, e]);
 	//transform selected entries
 	const selected_options = selected_entries ? Array.isArray(selected_entries) ? selected_entries : [selected_entries] : [];
 	//clean existing options and handle selection status
@@ -128,7 +118,8 @@ HTMLSelectElement.prototype.fill = function(entries, blank_entry, selected_entri
 		//do not manage empty option here
 		if(existing_option.value) {
 			//remove option if it is no longer needed
-			if(!options.has(existing_option.value) || options.get(existing_option.value) !== existing_option.text) {
+			const matching_option = options.find(o => o[0] === existing_option.value);
+			if(!matching_option || matching_option[1] !== existing_option.text) {
 				this.removeChild(existing_option);
 			}
 		}
@@ -145,7 +136,7 @@ HTMLSelectElement.prototype.fill = function(entries, blank_entry, selected_entri
 		//find existing option if any
 		const existing_option = existing_options.find(o => o.value === value);
 		if(existing_option) {
-			//re-add exiting option at the end of the select to have the good order at the end or the process
+			//re-add existing option at the end of the select to have the good order at the end or the process
 			this.appendChild(existing_option);
 			continue;
 		}
@@ -176,7 +167,7 @@ HTMLSelectElement.prototype.fill = function(entries, blank_entry, selected_entri
 	if(selected_options.isEmpty()) {
 		//otherwise select the blank or the first entry as HTML would automatically do when a select appears on a page
 		//in this case, this must be managed manually because some options could have be re-used and may have been selected
-		if(!blank_entry && !this.multiple && options.size > 0) {
+		if(!blank_entry && !this.multiple && options.length > 0) {
 			this.value = options.keys().next().value;
 		}
 		else {
@@ -186,6 +177,7 @@ HTMLSelectElement.prototype.fill = function(entries, blank_entry, selected_entri
 	//allow chain
 	return this;
 };
+
 /**
  * @type {Function}
  * @param {any[]} objects - List of objects used to fill the select
@@ -196,17 +188,59 @@ HTMLSelectElement.prototype.fill = function(entries, blank_entry, selected_entri
  * @returns {HTMLSelectElement} - The select element that will be filled
  */
 HTMLSelectElement.prototype.fillObjects = function(objects, value_property, label_property, blank_entry, selected_entries) {
-	const entries = Object.fromEntries(objects.map(o => {
+	/**@type {[string,string][]}*/
+	const entries = objects.map(o => {
 		const value = Function.isFunction(value_property) ? value_property.call(o) : o[value_property];
 		const label = Function.isFunction(label_property) ? label_property.call(o) : o[label_property];
 		return [value, label];
-	}));
+	});
 	return this.fill(entries, blank_entry, selected_entries);
 };
 
 //HTMLDataListElement
-HTMLDataListElement.prototype.fill = HTMLSelectElement.prototype.fill;
-HTMLDataListElement.prototype.fillObjects = HTMLSelectElement.prototype.fillObjects;
+/**
+ * @type {Function}
+ * @param {string[]} entries - List of entries
+ * @returns {HTMLDataListElement} - The select element that will be filled
+ */
+HTMLDataListElement.prototype.fill = function(entries) {
+	//clean existing options and handle selection status
+	const existing_options = Array.prototype.slice.call(this.children);
+	for(const existing_option of existing_options) {
+		if(existing_option.value) {
+			//remove option if it is no longer needed
+			if(!entries.includes(existing_option.value)) {
+				this.removeChild(existing_option);
+			}
+		}
+	}
+	//add missing options at the appropriate location
+	for(const value of entries) {
+		//find existing option if any
+		const existing_option = existing_options.find(o => o.value === value);
+		if(existing_option) {
+			//re-add existing option at the end of the select to have the good order at the end or the process
+			this.appendChild(existing_option);
+			continue;
+		}
+		//option does not already exist and must be added
+		//add option at the end of the select to have the good order at the end or the process
+		this.appendChild(document.createFullElement('option', {value: value}));
+	}
+	//allow chain
+	return this;
+};
+
+/**
+ * @type {Function}
+ * @param {string[]} objects - List of objects used to fill the select
+ * @param {string|Function} property - Property of the object or function applied to the object to obtain the value
+ * @returns {HTMLDataListElement} - The select element that will be filled
+ */
+HTMLDataListElement.prototype.fillObjects = function(objects, property) {
+	const options = objects.map(o => Function.isFunction(property) ? property.call(o) : o[property]);
+	return this.fill(options);
+};
 
 //Storage
 Storage.prototype.setObject = function(key, value) {
