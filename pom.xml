@@ -18,17 +18,17 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<log4j-version>2.18.0</log4j-version>
-		<jackson-version>2.13.3</jackson-version>
-		<jersey-version>3.0.3</jersey-version>
-		<jetty-version>11.0.7</jetty-version>
+		<log4j-version>2.19.0</log4j-version>
+		<jackson-version>2.14.0</jackson-version>
+		<jersey-version>3.1.0</jersey-version>
+		<jetty-version>11.0.12</jetty-version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>2.4.0-b180830.0359</version>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>4.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 
