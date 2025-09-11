@@ -1,10 +1,10 @@
 //Create schema
-CREATE CONSTRAINT FOR (b:Building) REQUIRE b.id IS UNIQUE;
+CREATE CONSTRAINT building_uniqueness FOR (b:Building) REQUIRE b.id IS UNIQUE;
 //Requires Neo4j Enterprise Edition
 //CREATE CONSTRAINT FOR (b:Building) REQUIRE exists(b.id);
 //CREATE CONSTRAINT FOR (b:Building) ASSERT exists(b.name);
 
-CREATE CONSTRAINT FOR (i:Ingredient) REQUIRE i.id IS UNIQUE;
+CREATE CONSTRAINT ingredient_uniqueness FOR (i:Ingredient) REQUIRE i.id IS UNIQUE;
 //Requires Neo4j Enterprise Edition
 //CREATE CONSTRAINT FOR (i:Ingredient) REQUIRE exists(i.id);
 //CREATE CONSTRAINT FOR (i:Ingredient) REQUIRE exists(i.name);
