@@ -19,32 +19,33 @@ public class InitDatabase {
 
 	private static void importStream(final GraphDatabaseService database, final String resourceName, final boolean stopOnError) throws QueryExecutionException, IOException, URISyntaxException {
 		Path path = Paths.get(InitDatabase.class.getResource(resourceName).toURI());
-		BufferedReader reader = Files.newBufferedReader(path);
 
-		final StringBuilder query = new StringBuilder();
-		String line = null;
-		while((line = reader.readLine()) != null) {
-			//empty lines
-			if(line.trim().isEmpty()) {
-				continue;
-			}
-			//inline comment
-			if(line.startsWith("//")) {
-				continue;
-			}
-			query.append(line);
-			if(line.endsWith(";")) {
-				try(final Transaction tx = database.beginTx()) {
-					tx.execute(query.toString());
-					tx.commit();
+		try(BufferedReader reader = Files.newBufferedReader(path)) {
+			final StringBuilder query = new StringBuilder();
+			String line = null;
+			while((line = reader.readLine()) != null) {
+				//empty lines
+				if(line.trim().isEmpty()) {
+					continue;
 				}
-				catch(final Exception e) {
-					LOGGER.error("Error with query [{}]: {}", query, e.getMessage());
-					if(stopOnError) {
-						throw e;
+				//inline comment
+				if(line.startsWith("//")) {
+					continue;
+				}
+				query.append(line);
+				if(line.endsWith(";")) {
+					try(final Transaction tx = database.beginTx()) {
+						tx.execute(query.toString());
+						tx.commit();
 					}
+					catch(final Exception e) {
+						LOGGER.error("Error with query [{}]: {}", query, e.getMessage());
+						if(stopOnError) {
+							throw e;
+						}
+					}
+					query.delete(0, query.length());
 				}
-				query.delete(0, query.length());
 			}
 		}
 	}
