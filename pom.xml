@@ -18,18 +18,17 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<log4j-version>2.19.0</log4j-version>
-		<jackson-version>2.14.0</jackson-version>
-		<jersey-version>3.1.0</jersey-version>
-		<jetty-version>11.0.12</jetty-version>
+		<log4j-version>2.24.1</log4j-version>
+		<jackson-version>2.20.0</jackson-version>
+		<jersey-version>3.1.7</jersey-version>
+		<jetty-version>12.1.1</jetty-version>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
-			<version>4.0.0</version>
-			<scope>provided</scope>
+			<version>4.0.2</version>
 		</dependency>
 
 		<!-- log -->
@@ -64,15 +63,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.fasterxml.jackson.jaxrs</groupId>
-			<artifactId>jackson-jaxrs-json-provider</artifactId>
+			<groupId>com.fasterxml.jackson.jakarta.rs</groupId>
+			<artifactId>jackson-jakarta-rs-json-provider</artifactId>
 			<version>${jackson-version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>jakarta.ws.rs</groupId>
 			<artifactId>jakarta.ws.rs-api</artifactId>
-			<version>3.1.0</version>
+			<version>4.0.0</version>
 		</dependency>
 
 		<dependency>
@@ -105,7 +104,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>3.13.0</version>
 				<configuration>
 					<release>21</release>
 				</configuration>
@@ -114,7 +113,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.3.2</version>
+				<version>3.4.0</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
@@ -122,19 +121,19 @@
 
 			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.1</version>
+				<version>3.2.5</version>
 				<configuration>
 					<argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
 				</configuration>
 			</plugin>
 
 			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
+				<groupId>org.eclipse.jetty.ee11</groupId>
+				<artifactId>jetty-ee11-maven-plugin</artifactId>
 				<version>${jetty-version}</version>
 				<configuration>
 					<webApp>
-						<defaultsDescriptor>src/main/resources/webdefault.xml</defaultsDescriptor>
+						<contextPath>/</contextPath>
 					</webApp>
 				</configuration>
 			</plugin>
